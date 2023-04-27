@@ -1,0 +1,69 @@
+CREATE TABLE Role(
+  role_id INT NOT NULL,
+  role VARCHAR(50) CHECK(role IN ('student', 'faculty', 'staff', 'TA')) NOT NULL,
+  PRIMARY KEY (role_id)
+);
+
+CREATE TABLE Users(
+  user_id INT NOT NULL,
+  first_name VARCHAR(50) NOT NULL,
+  last_name VARCHAR(50) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  phone VARCHAR(50),
+  role_id INT,
+  PRIMARY KEY (user_id),
+  FOREIGN KEY (role_id) REFERENCES Role(role_id)
+);
+
+CREATE TABLE Room(
+  room_id INT NOT NULL,
+  room_type VARCHAR(50) NOT NULL,
+  capacity INT NOT NULL,
+  PRIMARY KEY (room_id),
+  FOREIGN KEY (room_type) REFERENCES RoomType(room_type_id)
+);
+
+CREATE TABLE RoomType(
+  room_type_id INT NOT NULL,
+  type VARCHAR(50) CHECK(type IN ('study desk', 'computer lab desk', 'conference room', 'classroom', 'TA space', 'meeting room')) NOT NULL,
+  room_user_id INT NOT NULL,
+  PRIMARY KEY (room_type_id),
+  FOREIGN KEY (room_user_id) REFERENCES RoomUser(room_user_id)
+);
+
+CREATE TABLE RoomUser(
+  room_user_id INT NOT NULL,
+  user_role_id INT NOT NULL,
+  room_type_id INT NOT NULL,
+  PRIMARY KEY (room_user_id),
+  FOREIGN KEY (user_role_id) REFERENCES Role(role_id),
+  FOREIGN KEY (room_type_id) REFERENCES Room(room_id)
+);
+
+CREATE TABLE Booking(
+  booking_id INT NOT NULL,
+  number_people INT NOT NULL,
+  user_id INT NOT NULL,
+  room_id INT NOT NULL,
+  duration TIMESTAMP NOT NULL,
+  status_id VARCHAR(50) NOT NULL,
+  waiting_list_id INT NOT NULL,
+  PRIMARY KEY (booking_id),
+  FOREIGN KEY (user_id) REFERENCES Users(user_id),
+  FOREIGN KEY (room_id) REFERENCES Room(room_id),
+  FOREIGN KEY (status_id) REFERENCES Status(status_id),
+  FOREIGN KEY (waiting_list_id) REFERENCES WaitingList(waiting_list_id)
+);
+
+CREATE TABLE Status(
+  status_id INT NOT NULL,
+  status VARCHAR(50) CHECK(status IN ('booked', 'cancelled')) NOT NULL,
+  PRIMARY KEY (status_id)
+);
+
+CREATE TABLE WaitingList(
+  waiting_list_id INT NOT NULL,
+  user_id INT NOT NULL,
+  PRIMARY KEY (waiting_list_id),
+  FOREIGN KEY (user_id) REFERENCES Users(user_id)
+);
