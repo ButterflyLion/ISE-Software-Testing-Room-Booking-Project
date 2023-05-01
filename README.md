@@ -11,26 +11,41 @@ Room Booking Project for Software Testing module for CS4442. Built using flask o
 
 <details><summary><b>Set up the database in docker</b></summary>
 <p>
-Download the container from <a href = "https://hub.docker.com/r/gvenzl/oracle-xe">this link</a>.<br>
+Download the container from <a href = "https://hub.docker.com/r/gvenzl/oracle-xe">this link.</a>.<br>
 Initiate the docker instance using following command (execute in terminal):<br>
-docker run -d -p 1522:1521 -e ORACLE_PASSWORD=root --name room-booking-project gvenzl/oracle-xe
+docker run -d -p 1522:1521 -e ORACLE_PASSWORD=root --name room-booking-project gvenzl/oracle-xe<br>
 This initialises a new docker container.
 </p>
 </details>
 
 <details><summary><b>Connect container to database</b></summary>
 <p>
-1. Open DBeaver.
-2. Establish a connection with the database using credentials of SYSTEM. For this go to Database -> New Database Connection. Select Oracle, next and fill in the following details:
+1. Open DBeaver.<br>
+2. Establish a connection with the database using credentials of SYSTEM. For this go to Database -> New Database Connection. Select Oracle, next and fill in the following details:<br>
 Host: localhost, Port: 1522, Database: XEPDB1, Username: SYS, Role: SYSDBA, Password: root.
 </p>
 </details>
 
-<details><summary><b>Step 4 - Create the data</b></summary>
+<details><summary><b>Create the schema and add sample data</b></summary>
 <p>
-1. Create a new schema and name it RBS (for Room Booking System) and set the password as rbs.
-2. Create a script and paste the following code to create the tables:
-3. Create another script and paste the following code to insert template data:
+1. Create a new schema and name it RBS (for Room Booking System) and set the password as rbs.<br>
+2. Create a new script and paste the SQL code from SetUpDatabase.txt into it to create the schema.<br>
+3. Create another script and paste the SQL code from AddDataToDatabase.txt into it to insert sample data into the database.<br>
+</p>
+</details>
+
+<details><summary><b>Install necessary modules</b></summary>
+<p>
+1. Open your command prompt.<br>
+2. Run the command 'pip install flask', and allow the module to install.<br>
+3. Run the command 'pip install oracle', and allow the module to install.<br>
+</p>
+</details>
+
+<details><summary><b>Launch the app</b></summary>
+<p>
+Open the repository folder in your IDE and run 'main.py'.<br>
+Paste the following link in your browser: 'http://127.0.0.1:5000'.
 </p>
 </details>
 
