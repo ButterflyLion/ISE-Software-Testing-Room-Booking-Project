@@ -1,0 +1,26 @@
+body,html{
+    margin: 0;
+    padding: 0;
+    background-image: url("../Images/indeximage.jpg");
+}
+
+h1{
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 32px;
+    margin-top: 150px;
+    margin-left: 20px;
+}
+
+p{
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+    margin-top: 250px;
+    margin-left: 20px;
+
+}
+
+/* .main{
+
+} */

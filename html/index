@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Homepage</title>
+        <link rel="stylesheet" type="text/css" href="../css/homepage">
+        <link rel="stylesheet" type="text/css" href="../css/navbar">
+    </head>
+
+    <body>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Tour</a></li>
+                <li><a href="#">Manage Booking</a></li>
+                <li><a href="#">Create Booking</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+        <div> <!--class="main">     class="imageStyling"    -->
+            <!--<img class="img" src="../Images/indeximage.jpg" alt="ISE Image" width="100%">-->
+            <h1>ISE Software Testing<br>
+            Room Booking System Project</h1>       
+            <p>Project by Pardis Norouzi, Tamara Orosz & Conor Glynn</p>
+        </div>
+    </body>
+
+</html>
