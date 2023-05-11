@@ -39,21 +39,11 @@ CREATE TABLE RoomUserRole(
   FOREIGN KEY (room_type_id) REFERENCES Room(room_id)
 );
 
-CREATE TABLE Booking(
-  booking_id INT NOT NULL,
-  user INT NOT NULL,
-  room INT NOT NULL,
-  b_day DATE NOT NULL,
-  time_slot INT NOT NULL,
-  num_people INT NOT NULL,
-  b_status INT NOT NULL,
-  --waiting_list_id INT NOT NULL,
-  PRIMARY KEY (booking_id),
-  FOREIGN KEY (user) REFERENCES Users(user_id),
-  FOREIGN KEY (room) REFERENCES Room(room_id),
-  FOREIGN KEY (time_slot) REFERENCES TimeSlot(time_slot_id),
-  FOREIGN KEY (b_status) REFERENCES Status(status_id)
-  --FOREIGN KEY (waiting_list_id) REFERENCES WaitingList(waiting_list_id)
+CREATE TABLE TimeSlot(
+  time_slot_id INT NOT NULL,
+  start_time TIMESTAMP NOT NULL,
+  end_time TIMESTAMP NOT NULL,
+  PRIMARY KEY (time_slot_id)
 );
 
 CREATE TABLE Status(
@@ -62,9 +52,20 @@ CREATE TABLE Status(
   PRIMARY KEY (status_id)
 );
 
-CREATE TABLE TimeSlot(
-  time_slot_id INT NOT NULL,
-  start_time TIME NOT NULL,
-  end_time TIME NOT NULL,
-  PRIMARY KEY (time_slot_id)
+
+CREATE TABLE Booking(
+  booking_id INT NOT NULL,
+  user_id INT NOT NULL,
+  room INT NOT NULL,
+  b_day DATE NOT NULL,
+  time_slot INT NOT NULL,
+  num_people INT NOT NULL,
+  b_status INT NOT NULL,
+  --waiting_list_id INT NOT NULL,
+  PRIMARY KEY (booking_id),
+  FOREIGN KEY (user_id) REFERENCES Users(user_id),
+  FOREIGN KEY (room) REFERENCES Room(room_id),
+  FOREIGN KEY (time_slot) REFERENCES TimeSlot(time_slot_id),
+  FOREIGN KEY (b_status) REFERENCES Status(status_id)
+  --FOREIGN KEY (waiting_list_id) REFERENCES WaitingList(waiting_list_id)
 );
