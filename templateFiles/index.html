@@ -18,18 +18,18 @@
         
         <div
           class="progress-step progress-step-active"
-          data-title="Intro"
+          data-title="ID"
         ></div>
-        <div class="progress-step" data-title="Contact"></div>
-        <div class="progress-step" data-title="ID"></div>
-        <div class="progress-step" data-title="Password"></div>
+        <div class="progress-step" data-title="Room"></div>
+        <div class="progress-step" data-title="Date"></div>
+        <div class="progress-step" data-title="Confirm"></div>
       </div>
 
       <!-- Steps -->
       <div class="form-step form-step-active">
         <div class="input-group">
-          <label for="username">User ID</label>
-          <input type="text" name="username" id="username" />
+          <label for="user_id">User ID</label>
+          <input type="number" name="user_id" id="user_id" />
         </div>
         <div class="">
           <a href="#" class="btn btn-next width-50 ml-auto">Next</a>
@@ -37,12 +37,20 @@
       </div>
       <div class="form-step">
         <div class="input-group">
-          <label for="phone">Phone</label>
-          <input type="text" name="phone" id="phone" />
+          <label for="phone">No. of Guests</label>
+          <input type="number" name="guests" id="guests" />
         </div>
         <div class="input-group">
-          <label for="email">Email</label>
-          <input type="text" name="email" id="email" />
+          <label for="room">Room</label>
+          <select id="room", name="room">
+            <!--<?php
+            $sql = oci_parse($connection, "SELECT room_id FROM RBS.ROOM");
+            oci_execute($sql);
+            while($row = oci_fetch_array($sql, OCI_ASSOC)){
+              echo "<option value=\"Choose room\">".$row['ROOM_ID']."</option>";
+            }
+            ?>-->
+          </select>
         </div>
         <div class="btns-group">
           <a href="#" class="btn btn-prev">Previous</a>
@@ -51,12 +59,12 @@
       </div>
       <div class="form-step">
         <div class="input-group">
-          <label for="dob">Date of Birth</label>
+          <label for="dob">Date of Booking</label>
           <input type="date" name="dob" id="dob" />
         </div>
         <div class="input-group">
-          <label for="ID">National ID</label>
-          <input type="number" name="ID" id="ID" />
+          <label for="time">Time</label>
+          <input type="time" name="time" id="time" />
         </div>
         <div class="btns-group">
           <a href="#" class="btn btn-prev">Previous</a>
