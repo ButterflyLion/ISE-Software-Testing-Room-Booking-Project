@@ -52,6 +52,6 @@ Paste the following link in your browser: 'http://127.0.0.1:5000'.
 ## Team Members: Pardis Norouzi, Tamara Orosz & Conor Glynn
 ### About Our Project:
 ### How to Run Our Project and its Automated Tests:
-Set up a virtual environment, pip install flask, splinter, oracledb...
+Set up a virtual environment, pip install flask, splinter, oracledb, mock...
 ### Brief Outline of Features/Tests:
 ### Percentage Contribution by each Group Member with a Brief Description:
