@@ -4,13 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Log In</title>
+    <link rel="stylesheet" type="text/css" href="../staticFiles/login.css">
 </head>
 <body>
-    <form action="/homepage">
-        <input type="text">
-        <input type="text">
-        <input type="submit" value="Submit">
-    </form>
+    <div class="box" style="background-color:grey;">
+        <form action="/homepage">
+            <span><label for="id"><b>Student/Staff ID:</b></label><br><br>
+            <input type="text" placeholder="e.g. 22123456" pattern="(\d{8})" required><br><br>
+            <label for="password"><b>Password:</b></label><br><br>
+            <input type="text" placeholder="e.g. &#9679;&#9679;&#9679;&#9679;&#9679;" required><br><br>
+            <input type="submit" value="Log In"></span>
+        </form>
+    <div>
 </body>
 </html>
