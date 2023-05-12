@@ -1,0 +1,24 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.box {
+    margin:auto;
+    height: 400px;
+    width: 400px;
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    background:black;
+    text-align: center;
+  }
+
+  span {
+    
+    font-family: monospace, sans-serif;
+    font-size: 20px;
+    color: white;
+  }
