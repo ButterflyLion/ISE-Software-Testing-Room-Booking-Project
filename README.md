@@ -37,8 +37,10 @@ Host: localhost, Port: 1522, Database: XEPDB1, Username: SYS, Role: SYSDBA, Pass
 <details><summary><b>Install necessary modules</b></summary>
 <p>
 1. Open your command prompt.<br>
-2. Run the command 'pip install flask', and allow the module to install.<br>
-3. Run the command 'pip install oracle', and allow the module to install.<br>
+2. Set up a virtual environment and actiavte it.
+3. Run the following with 'pip install ...', and allow the modules to install:<br>
+   flask, oracle, oracledb, splinter, mock, ...<br>
+4. Download chromedriver from https://chromedriver.chromium.org/ and edit the executable_path in functional_test.py to the path to chromedriver on your machine.
 </p>
 </details>
 
@@ -52,8 +54,6 @@ Paste the following link in your browser: 'http://127.0.0.1:5000'.
 ## Team Members: Pardis Norouzi, Tamara Orosz & Conor Glynn
 ### About Our Project:
 ### How to Run Our Project and its Automated Tests:
-Set up a virtual environment and pip install the following in it:
-flask, splinter, oracledb, mock...
-Also download chromedriver
+To run functional_test.py simply run main.py first and then run functional_test.py. The code should exit with code=0 if the automated tests passed, i.e. the webpage functions as intended.
 ### Brief Outline of Features/Tests:
 ### Percentage Contribution by each Group Member with a Brief Description:
