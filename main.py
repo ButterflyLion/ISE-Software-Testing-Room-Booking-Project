@@ -7,7 +7,8 @@ user = 'SYS'
 password = 'root'
 port = 1522
 service_name = 'XEPDB1'
-conn_string = "localhost:{port}/{service_name}".format(
+server = 'NAS'
+conn_string = "server:{port}/{service_name}".format(
     port=port, service_name=service_name)
 app = Flask(__name__, template_folder='templateFiles', static_folder='staticFiles')
 data = []
