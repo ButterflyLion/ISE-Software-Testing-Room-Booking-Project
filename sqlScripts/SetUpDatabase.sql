@@ -1,3 +1,6 @@
+GRANT UNLIMITED TABLESPACE TO RBS;
+GRANT UNLIMITED TABLESPACE TO SYS;
+
 CREATE TABLE Role(
   role_id INT NOT NULL,
   u_role VARCHAR(50) CHECK(u_role IN ('student', 'faculty', 'staff', 'TA', 'admin')) NOT NULL,
@@ -9,6 +12,7 @@ CREATE TABLE Users(
   first_name VARCHAR(50) NOT NULL,
   last_name VARCHAR(50) NOT NULL,
   email VARCHAR(255) NOT NULL,
+  password VARCHAR (100) NOT NULL,
   phone VARCHAR(50),
   role_id INT NOT NULL,
   PRIMARY KEY (user_id),
