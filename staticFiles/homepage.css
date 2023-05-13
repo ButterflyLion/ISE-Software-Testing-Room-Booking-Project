@@ -2,6 +2,8 @@ body,html{
     margin: 0;
     padding: 0;
     background-image: url("homepageimage.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 h1{
