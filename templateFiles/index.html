@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
     <!--script src="{{ url_for('static', filename='script.js') }}" defer></script-->
-    <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css" />
     <title>Room Booking</title>
 
     <script>
@@ -19,6 +20,8 @@
           $("#mainform").submit(); // Submit the form
         });
       });
+
+
 
 
     </script>
@@ -140,12 +143,48 @@
 
           <span style="color: red"> {{ err }}</span>
 
+          {% else %}
+
+          <div id="datepicker" style="  display: flex;justify-content: center;align-items: center;"></div>
+          <script>      
+            $( function() {
+              // Get today's date
+                  var today = new Date();
+
+                  // Calculate tomorrow's date
+                  // Calculate the date one month from today
+                  var oneMonthFromToday = new Date();
+                  oneMonthFromToday.setMonth(today.getMonth() + 1);
+
+                  // Initialize the datepicker with the minDate and maxDate options
+                  $('#datepicker').datepicker({
+                    minDate: today, // set the minimum date to today
+                    maxDate: oneMonthFromToday, // set the maximum date to tomorrow
+                    beforeShowDay: function(date) {
+                      // Disable all dates before today and after tomorrow
+                      if (date < today || date > oneMonthFromToday) {
+                        return [false];
+                      }
+                      return [true];
+                    }
+                  });
+
+            } );
+    
+    
+          </script>
           {% endif %}
 
-          Days
+          
+
+
+          
         </div>
         <div class="btns-group">
           <input type="hidden" name="s" value="hours">
+          <input type="hidden" name="guests" value="{{ NoGuests }}">
+          <input type="hidden" name="roomid" value="{{ Room_id }}">
+          <input type="hidden" name="selectedDate" id="selectedDate">
           <button type="submit" class="btn btn-next" name="submit">Next</button>
         </div>
       </div>
