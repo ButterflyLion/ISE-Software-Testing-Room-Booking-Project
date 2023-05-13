@@ -1,4 +1,3 @@
-<!--https://github.com/Basir-PD/100-Projects-HTML-CSS-JavaScript/tree/master/32-%20Multi%20Step%20Form-->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,89 +5,154 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+    <!--script src="{{ url_for('static', filename='script.js') }}" defer></script-->
+    <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <title>Room Booking</title>
+
+    <script>
+
+
+    </script>
   </head>
   <body>
-    <form action="#" class="form">
+    <form id="mainform" action="{{ url_for('index') }}" class="form" method="POST">
+
       <h1 class="text-center">Room Booking Form</h1>
       <!-- Progress bar -->
+
+      
       <div class="progressbar">
         <div class="progress" id="progress"></div>
         
-        <div
-          class="progress-step progress-step-active"
-          data-title="ID"
-        ></div>
-        <div class="progress-step" data-title="Room"></div>
-        <div class="progress-step" data-title="Date"></div>
-        <div class="progress-step" data-title="Confirm"></div>
+        <div class="progress-step{{ ' progress-step-active' if stage == 'main' else '' }}" data-title="Welcome"></div>
+        <div class="progress-step{{ ' progress-step-active' if stage == 'guests' else '' }}" data-title="Guests"></div>
+        <div class="progress-step{{ ' progress-step-active' if stage == 'rooms' else '' }}" data-title="Rooms"></div>
+        <div class="progress-step{{ ' progress-step-active' if stage == 'dates' else '' }}" data-title="Dates"></div>
+        <div class="progress-step{{ ' progress-step-active' if stage == 'hours' else '' }}" data-title="Hours"></div>
+        <div class="progress-step{{ ' progress-step-active' if stage == 'confirm' else '' }}" data-title="Confirm"></div>
       </div>
+      
 
       <!-- Steps -->
+
+      {% if stage == "main" %}
+
       <div class="form-step form-step-active">
         <div class="input-group">
-          <label for="user_id">User ID</label>
-          <input type="number" name="user_id" id="user_id" />
+          <div>
+            Welcome {{ session.firstname }} {{ session.lastname }} <br>
+            Rolo: {{ session.userrole }}</div>
+
+          <div>
+
+            Here are your previous bookings
+            </br>
+            To be implemented
+            </br>
+
+          </div>
+
         </div>
-        <div class="">
-          <a href="#" class="btn btn-next width-50 ml-auto">Next</a>
+        <div class="btns-group">
+          <input type="hidden" name="s" value="guests">
+          <button type="submit" class="btn btn-next" name="submit">Make a Booking</button>
         </div>
       </div>
-      <div class="form-step">
+
+      {% endif %}
+
+      {% if stage == "guests" %}
+
+      <div class="form-step form-step-active">
         <div class="input-group">
-          <label for="phone">No. of Guests</label>
+          <label for="guests">Number of Guest</label>
           <input type="number" name="guests" id="guests" />
         </div>
-        <div class="input-group">
-          <label for="room">Room</label>
-          <select id="room", name="room">
-            <!--<?php
-            $sql = oci_parse($connection, "SELECT room_id FROM RBS.ROOM");
-            oci_execute($sql);
-            while($row = oci_fetch_array($sql, OCI_ASSOC)){
-              echo "<option value=\"Choose room\">".$row['ROOM_ID']."</option>";
-            }
-            ?>-->
-          </select>
-        </div>
         <div class="btns-group">
-          <a href="#" class="btn btn-prev">Previous</a>
-          <a href="#" class="btn btn-next">Next</a>
+          <input type="hidden" name="s" value="rooms">
+          <button type="submit" class="btn btn-next" name="submit">Next</button>
         </div>
       </div>
-      <div class="form-step">
+
+      {% endif %}
+
+      {% if stage == "rooms" %}
+
+      <div class="form-step form-step-active">
         <div class="input-group">
-          <label for="dob">Date of Booking</label>
-          <input type="date" name="dob" id="dob" />
-        </div>
-        <div class="input-group">
-          <label for="time">Time</label>
-          <input type="time" name="time" id="time" />
+          <table class="table" id="tbl">
+            <thead style="background-color: rgb(11, 78, 179); color: #f3f3f3">
+              <tr>
+                <th scope="col">Room Description</th>
+                <th scope="col">Min Capacity</th>
+                <th scope="col">Max Capacity</th>
+                <th scope="col">Book This</th>
+              </tr>
+            </thead>
+            <tbody id="myTable" style="background-color: rgb(235, 240, 245)">
+              <!-- first-row -->
+              {% for row in data %}
+              <tr>
+                <td>{{ row["description"] }}</td>
+                <td>{{ row["min"] }}</td>
+                <td>{{ row["max"] }}</td>
+                <td>Book</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
         </div>
         <div class="btns-group">
-          <a href="#" class="btn btn-prev">Previous</a>
-          <a href="#" class="btn btn-next">Next</a>
+          <input type="hidden" name="s" value="dates">
         </div>
       </div>
-      <div class="form-step">
+
+      {% endif %}
+
+      {% if stage == "dates" %}
+
+      <div class="form-step form-step-active">
         <div class="input-group">
-          <label for="password">Password</label>
-          <input type="password" name="password" id="password" />
-        </div>
-        <div class="input-group">
-          <label for="confirmPassword">Confirm Password</label>
-          <input
-            type="password"
-            name="confirmPassword"
-            id="confirmPassword"
-          />
+          Days
         </div>
         <div class="btns-group">
-          <a href="#" class="btn btn-prev">Previous</a>
-          <input type="submit" value="Submit" class="btn" />
+          <input type="hidden" name="s" value="hours">
+          <button type="submit" class="btn btn-next" name="submit">Next</button>
         </div>
       </div>
+
+      {% endif %}
+
+      {% if stage == "hours" %}
+
+      <div class="form-step form-step-active">
+        <div class="input-group">
+          Hours
+        </div>
+        <div class="btns-group">
+          <input type="hidden" name="s" value="confirm">
+          <button type="submit" class="btn btn-next" name="submit">Next</button>
+        </div>
+      </div>
+
+      {% endif %}
+
+      {% if stage == "confirm" %}
+
+      <div class="form-step form-step-active">
+        <div class="input-group">
+          Confirm
+        </div>
+        <div class="btns-group">
+          <input type="hidden" name="s" value="main">
+          <button type="submit" class="btn btn-next" name="submit">Next</button>
+        </div>
+      </div>
+
+      {% endif %}
+
+
     </form>
   </body>
 </html>
