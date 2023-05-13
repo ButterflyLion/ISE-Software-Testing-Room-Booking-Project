@@ -12,6 +12,14 @@
 
     <script>
 
+      $(document).ready(function() {
+        $(".bookbtn").click(function() {
+          var page = $(this).attr("id"); // Get the value of the "page" attribute of the button
+          $("input[name='roomid']").val(page); // Set the value of the hidden input field to the "page" attribute value
+          $("#mainform").submit(); // Submit the form
+        });
+      });
+
 
     </script>
   </head>
@@ -81,10 +89,20 @@
 
       <div class="form-step form-step-active">
         <div class="input-group">
+
+          {% if err %}
+
+            <span style="color: red"> {{ err }}</span>
+
+          {% elif data|length == 0 %}
+            <span>No rooms found</span>
+
+          {% else %}
+          
           <table class="table" id="tbl">
             <thead style="background-color: rgb(11, 78, 179); color: #f3f3f3">
               <tr>
-                <th scope="col">Room Description</th>
+                <th scope="col" style="width:150px;">Room Description</th>
                 <th scope="col">Min Capacity</th>
                 <th scope="col">Max Capacity</th>
                 <th scope="col">Book This</th>
@@ -97,14 +115,18 @@
                 <td>{{ row["description"] }}</td>
                 <td>{{ row["min"] }}</td>
                 <td>{{ row["max"] }}</td>
-                <td>Book</td>
+                <td><button type="submit" class="btn bookbtn" style="width:70px" id="{{ row["room_id"] }}">Book</button></td>
               </tr>
               {% endfor %}
             </tbody>
           </table>
+
+          {% endif %}
         </div>
         <div class="btns-group">
           <input type="hidden" name="s" value="dates">
+          <input type="hidden" name="guests" value="{{ NoGuests }}">
+          <input type="hidden" name="roomid" value="">
         </div>
       </div>
 
@@ -114,6 +136,12 @@
 
       <div class="form-step form-step-active">
         <div class="input-group">
+          {% if err %}
+
+          <span style="color: red"> {{ err }}</span>
+
+          {% endif %}
+
           Days
         </div>
         <div class="btns-group">

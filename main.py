@@ -32,13 +32,12 @@ def index():
 
         err = False
         data = []
-
+        NoGuests = 0
 
         con = oracledb.connect(user=user, password=password, dsn=conn_string)
         cur = con.cursor()
         
         stage = request.form.get('s', 'main') #is s is posted, set stage to that otherwise set it to main.
-        print(stage) 
         print(request.form)
 
         if stage == 'main':
@@ -53,28 +52,30 @@ def index():
 
         if request.method == 'POST':
 
-            if stage == 'rooms':
-                NoGuests = request.form.get('guests', '0')
-                print(NoGuests)
-                cur.execute("SELECT room_type_id FROM RBS.RoomUserRole WHERE user_role_id = :userroleid", {'userroleid': session['userroleid']})
-                RoomTypesAllowed = [row[0] for row in cur.fetchall()] #getting Rooms allowed for this user
-                RoomTypesAllowedString = format(','.join(str(i) for i in RoomTypesAllowed));
-                print(RoomTypesAllowedString)
 
-                query = "SELECT ROOM.*, ROOMTYPE.r_type FROM RBS.ROOM \
-                        LEFT JOIN RBS.ROOMTYPE ON RBS.ROOM.room_type = RBS.ROOMTYPE.room_type_id \
-                        WHERE ROOM.room_type IN ({}) AND ROOM.mincapacity <= :NoGuests AND ROOM.maxcapacity >= :NoGuests".format(','.join([':{}'.format(i+1) for i in range(len(RoomTypesAllowed))]))
-                params = {'NoGuests': NoGuests}
-                params.update({str(i+1): val for i, val in enumerate(RoomTypesAllowed)})
-                cur.execute(query, params)
-                for row in cur:
-                    data.append({"description": row[4], "min": row[2],
-                    "max": row[3]})
-       
-                
+            NoGuests = request.form.get('guests', '0')
 
-                print('post is rooms')
-            elif stage == 'dates':
+            if stage == 'rooms' or stage == "dates" or stage == "hours":
+                 
+                Rooms = get_rooms_accessible_to_role(NoGuests)
+                if Rooms['err'] == False:
+                    data = Rooms['data']
+                else:
+                    err = Rooms['err']                        
+               
+            if stage == 'dates':
+
+                print(Rooms)
+
+                # Set the date range to check for bookings
+                start_date = datetime.date.today().replace(day=1)  # First day of current month
+                end_date = start_date.replace(month=start_date.month+1) - datetime.timedelta(days=1)  # Last day of current month
+                cur.execute('SELECT TIME_SLOT_ID FROM RBS.TIMESLOT')
+                time_slots = [row[0] for row in cur.fetchall()]
+
+
+                print(request.form)
+
                 print('post is dates')
             elif stage == 'hours':
                 print('post is hours')
@@ -85,7 +86,7 @@ def index():
         # Close the cursor and connection
         cur.close()
         con.close()
-        return render_template('index.html',stage=stage,data=data)
+        return render_template('index.html',stage=stage,err=err,data=data,NoGuests=NoGuests)
         
 
 @app.route('/', methods=['GET', 'POST'])
@@ -134,5 +135,63 @@ def login():
     return render_template('login.html',err=err)
 
 
+def get_rooms_accessible_to_role(NoGuests = False):
+
+    ret = {'data': [], 'room_ids' : [], 'err': False}
+
+    if NoGuests and NoGuests.isnumeric():
+        NoGuests = int(NoGuests)
+    else:
+        NoGuests = 0
+
+    if NoGuests > 0 :
+
+        con = oracledb.connect(user=user, password=password, dsn=conn_string)
+        cur = con.cursor()
+
+        cur.execute("SELECT room_type_id FROM RBS.RoomUserRole WHERE user_role_id = :userroleid", {'userroleid': session['userroleid']})
+        RoomTypesAllowed = [row[0] for row in cur.fetchall()] #getting Rooms allowed for this user
+        print(RoomTypesAllowed)
+
+        query = "SELECT ROOM.*, ROOMTYPE.r_type FROM RBS.ROOM \
+                LEFT JOIN RBS.ROOMTYPE ON RBS.ROOM.room_type = RBS.ROOMTYPE.room_type_id \
+                WHERE ROOM.room_type IN ({}) AND ROOM.mincapacity <= :NoGuests AND ROOM.maxcapacity >= :NoGuests".format(','.join([':{}'.format(i+1) for i in range(len(RoomTypesAllowed))]))
+        params = {'NoGuests': NoGuests}
+        params.update({str(i+1): val for i, val in enumerate(RoomTypesAllowed)}) #converting an array of roomtypeids and passing them one by one
+        cur.execute(query, params)
+
+        rows = cur.fetchall()
+        if rows:
+            data = []
+            room_ids = []
+            for row in rows:
+                data.append({
+                    "room_id": row[0],
+                    "description": row[4],
+                    "min": row[2],
+                    "max": row[3]
+                })
+                room_ids.append(row[0])
+
+            ret['data']=data
+            ret['room_ids']=room_ids
+
+        else:
+            ret['err'] = 'No Rooms found!'
+        
+        cur.close()
+        con.close()
+
+    else:
+        ret['err'] = 'Invalid rooms'
+        
+
+    return ret
+
+
+
 if __name__ == '__main__':
     app.run()
+
+
+
