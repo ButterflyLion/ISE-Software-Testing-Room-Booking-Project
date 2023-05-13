@@ -32,7 +32,8 @@ def index():
 
         err = False
         data = []
-        NoGuests = 0
+        NoGuests = False
+        Room_id = False
 
         con = oracledb.connect(user=user, password=password, dsn=conn_string)
         cur = con.cursor()
@@ -41,7 +42,7 @@ def index():
         print(request.form)
 
         if stage == 'main':
-            session['BGuets'] = ''
+            session['BGuests'] = ''
             session['BRoom'] = ''
             session['BDate'] = ''
             session['BHour'] = ''
@@ -53,7 +54,8 @@ def index():
         if request.method == 'POST':
 
 
-            NoGuests = request.form.get('guests', '0')
+            NoGuests = request.form.get('guests', False)
+            Room_id = request.form.get('roomid', False)
 
             if stage == 'rooms' or stage == "dates" or stage == "hours":
                  
@@ -63,18 +65,32 @@ def index():
                 else:
                     err = Rooms['err']                        
                
-            if stage == 'dates':
+            if err == False and stage == 'dates':
 
                 print(Rooms)
+                room_ids = Rooms['room_ids']
 
                 # Set the date range to check for bookings
-                start_date = datetime.date.today().replace(day=1)  # First day of current month
+                start_date = datetime.date.today() # First day of current month
                 end_date = start_date.replace(month=start_date.month+1) - datetime.timedelta(days=1)  # Last day of current month
+                print(start_date)
+                print(end_date)
+
                 cur.execute('SELECT TIME_SLOT_ID FROM RBS.TIMESLOT')
                 time_slots = [row[0] for row in cur.fetchall()]
 
+                cur.execute("SELECT b_day, time_slot FROM RBS.booking WHERE b_day BETWEEN :start_date AND :end_date AND room IN ({})".format(', '.join(str(room_id) for room_id in room_ids)),
+                             {'start_date': start_date, 'end_date': end_date})
+                bookings = cur.fetchall()
 
                 print(request.form)
+
+                print(bookings)
+
+                if bookings:
+                    print('here')
+                else:
+                    print('there')
 
                 print('post is dates')
             elif stage == 'hours':
@@ -86,7 +102,7 @@ def index():
         # Close the cursor and connection
         cur.close()
         con.close()
-        return render_template('index.html',stage=stage,err=err,data=data,NoGuests=NoGuests)
+        return render_template('index.html',stage=stage,err=err,data=data,NoGuests=NoGuests,Room_id=Room_id)
         
 
 @app.route('/', methods=['GET', 'POST'])
@@ -151,7 +167,7 @@ def get_rooms_accessible_to_role(NoGuests = False):
 
         cur.execute("SELECT room_type_id FROM RBS.RoomUserRole WHERE user_role_id = :userroleid", {'userroleid': session['userroleid']})
         RoomTypesAllowed = [row[0] for row in cur.fetchall()] #getting Rooms allowed for this user
-        print(RoomTypesAllowed)
+
 
         query = "SELECT ROOM.*, ROOMTYPE.r_type FROM RBS.ROOM \
                 LEFT JOIN RBS.ROOMTYPE ON RBS.ROOM.room_type = RBS.ROOMTYPE.room_type_id \
