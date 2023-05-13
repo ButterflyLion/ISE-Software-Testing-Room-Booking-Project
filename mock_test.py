@@ -1,48 +1,56 @@
 # https://medium.com/swlh/python-testing-with-a-mock-database-sql-68f676562461
-import oracledb.connector
-from oracledb.connector import errorcode
+
+# from unittest.mock import MagicMock
+#db = MagicMock()
+
+import oracledb
+from oracledb import errorcode
+import unittest
 from unittest import TestCase
 from mock import patch
+import main
 
-
-class MockDB(TestCase):
-    ORACLEDB_HOST = "localhost"
-    ORACLEDB_PORT = "1522"
-    ORACLEDB_USER = "SYS"
-    ORACLEDB_PASSWORD = "root"
+class MockDB(unittest.TestCase):
     ORACLEDB_DB = "RBS"
+    ORACLEDB_PASSWORD = "paswrd"
+    ORACLEDB_USER = "SYSTEM"
+    ORACLEDB_HOST = "localhost"
+    ORACLEDB_PORT = 1521
+    ORACLEDB_SERVICE = "ORCL"
 
     @classmethod
     def setUpClass(cls):
         # define database connection
         cnx = oracledb.connect(
-            host=ORACLEDB_HOST,
-            user=ORACLEDB_USER,
-            password=ORACLEDB_PASSWORD,
-            port=ORACLEDB_PORT
+            host=cls.ORACLEDB_HOST,
+            user=cls.ORACLEDB_USER,
+            password=cls.ORACLEDB_PASSWORD, 
+            port=cls.ORACLEDB_PORT,
+            service_name=cls.ORACLEDB_SERVICE
         )
         cursor = cnx.cursor(dictionary=True)
 
         # if database is already created, drop it
         try:
-            cursor.execute("DROP USER {} CASCADE".format(ORACLEDB_DB))
+            cursor.execute("DROP USER {} CASCADE".format(cls.ORACLEDB_DB))
             cursor.close()
             print("DB dropped")
         except oracledb.Error as err:
-            print("{}{}".format(ORACLEDB_DB, err))
+            print("{}{}".format(cls.ORACLEDB_DB, err))
 
         cursor = cnx.cursor(dictionary=True)
+
         # create database
         try:
             cursor.execute(
-                "CREATE USER {} IDENTIFIED BY {}".format(ORACLEDB_DB, ORACLEDB_PASSWORD)
+                "CREATE USER {} IDENTIFIED BY {}".format(cls.ORACLEDB_DB, cls.ORACLEDB_PASSWORD)
                            )
         except oracledb.Error as err:
             print("Failed creating database: {}".format(err))
             exit(1)
-        cnx.database = ORACLEDB_DB
+        cnx.database = cls.ORACLEDB_DB
 
-        # create table
+        # create tables
         with open('SetUpDatabase.sql', 'r') as f:
             sql1 = f.read()
         try:
@@ -69,10 +77,10 @@ class MockDB(TestCase):
         cnx.close()
 
         testconfig = {
-            "host": ORACLEDB_HOST,
-            "user": ORACLEDB_USER,
-            "password": ORACLEDB_PASSWORD,
-            "database": ORACLEDB_DB,
+            "host": cls.ORACLEDB_HOST,
+            "user": cls.ORACLEDB_USER,
+            "password": cls.ORACLEDB_PASSWORD,
+            "service_name": cls.ORACLEDB_SERVICE
         }
         cls.mock_db_config = patch.dict(main.config, testconfig)
         cls.mock_db_config.start()
@@ -80,15 +88,15 @@ class MockDB(TestCase):
     @classmethod
     def tearDownClass(cls):
         cnx = oracledb.connect(
-            host=ORACLEDB_HOST, user=ORACLEDB_USER, password=ORACLEDB_PASSWORD
+            host=cls.ORACLEDB_HOST, user=cls.ORACLEDB_USER, password=cls.ORACLEDB_PASSWORD
         )
         cursor = cnx.cursor(dictionary=True)
 
         # drop test database
         try:
-            cursor.execute("DROP USER {} CASCADE".format(ORACLEDB_DB))
+            cursor.execute("DROP USER {} CASCADE".format(cls.ORACLEDB_DB))
             cnx.commit()
             cursor.close()
         except oracledb.Error as err:
-            print("Database {} does not exists. Dropping db failed".format(ORACLEDB_DB))
+            print("Database {} does not exists. Dropping db failed".format(cls.ORACLEDB_DB))
         cnx.close()

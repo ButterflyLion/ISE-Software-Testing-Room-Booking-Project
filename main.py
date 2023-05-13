@@ -4,12 +4,15 @@ import oracledb
 import hashlib
 
 # Replace with your actual Oracle database credentials
-user = 'SYS'
-password = 'root'
-port = 1522
-service_name = 'XEPDB1'
+config = {
+    'host': 'localhost',
+    'user': 'SYS',
+    'password': 'root',
+    'port': 1522,
+    'service_name': 'ORCL'
+}
 conn_string = "localhost:{port}/{service_name}".format(
-    port=port, service_name=service_name)
+    port=config['port'], service_name=config['service_name'])
 app = Flask(__name__, template_folder='templateFiles', static_folder='staticFiles')
 
 # This is for login Sessions
@@ -40,7 +43,7 @@ def login():
         passh = hashlib.md5(request.form['password'].encode()).hexdigest()
         
         #Connecting to database
-        con = oracledb.connect(user=user, password=password, dsn=conn_string)
+        con = oracledb.connect(user=config['user'], password=config['password'], dsn=conn_string)
 
         with con.cursor() as cursor:
             cursor.execute("SELECT * FROM RBS.USERS \
