@@ -30,6 +30,7 @@ CREATE TABLE Room(
   room_type INT NOT NULL,
   mincapacity INT NOT NULL,
   maxcapacity INT NOT NULL,
+  room_desc VARCHAR(255) NOT NULL,
   PRIMARY KEY (room_id),
   FOREIGN KEY (room_type) REFERENCES RoomType(room_type_id)
 );

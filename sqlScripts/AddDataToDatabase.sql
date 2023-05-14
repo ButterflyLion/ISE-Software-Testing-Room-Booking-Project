@@ -1,7 +1,7 @@
-INSERT INTO RBS.Role VALUES (1, 'Admin');
-INSERT INTO RBS.Role VALUES (2, 'Staff');
-INSERT INTO RBS.Role VALUES (3, 'Faculty');
-INSERT INTO RBS.Role VALUES (4, 'Student');
+INSERT INTO RBS.Role VALUES (1, 'admin');
+INSERT INTO RBS.Role VALUES (2, 'staff');
+INSERT INTO RBS.Role VALUES (3, 'faculty');
+INSERT INTO RBS.Role VALUES (4, 'student');
 INSERT INTO RBS.Role VALUES (5, 'TA');
 
 INSERT INTO RBS.Users VALUES (1, 'William', 'Walker', '1@studentmail.ul.ie','827ccb0eea8a706c4c34a16891f84e7b', '+353000000000', 4);
@@ -28,23 +28,23 @@ INSERT INTO RBS.RoomType VALUES (5, 'TA space');
 INSERT INTO RBS.RoomType VALUES (6, 'meeting room');
 
 --study desks can be booked by one person only
-INSERT INTO RBS.Room VALUES (1, 1, 1, 1);
-INSERT INTO RBS.Room VALUES (2, 1, 1, 1);
+INSERT INTO RBS.Room VALUES (1, 1, 1, 1, 'Study Desk 1');
+INSERT INTO RBS.Room VALUES (2, 1, 1, 1, 'Study Desk 2');
 --computer lab desk can be booked by one person only
-INSERT INTO RBS.Room VALUES (3, 2, 1, 1);
+INSERT INTO RBS.Room VALUES (3, 2, 1, 1,'Computer Lab Desk');
 --conference room can be booked from 15 to 30 people
-INSERT INTO RBS.Room VALUES (4, 3, 15, 30);
+INSERT INTO RBS.Room VALUES (4, 3, 15, 30,'Conference Room');
 --classrooms can be booked from 30 to 50 people
-INSERT INTO RBS.Room VALUES (5, 4, 30, 50);
-INSERT INTO RBS.Room VALUES (6, 4, 30, 50);
-INSERT INTO RBS.Room VALUES (7, 4, 30, 50);
-INSERT INTO RBS.Room VALUES (8, 4, 30, 50);
+INSERT INTO RBS.Room VALUES (5, 4, 30, 50,'Classroom 1');
+INSERT INTO RBS.Room VALUES (6, 4, 30, 50,'Classroom 2');
+INSERT INTO RBS.Room VALUES (7, 4, 30, 50,'Classroom 3');
+INSERT INTO RBS.Room VALUES (8, 4, 30, 50,'Classroom 4');
 --TA space can be booked by one person only
-INSERT INTO RBS.Room VALUES (9, 5, 1, 1);
-INSERT INTO RBS.Room VALUES (10, 5, 1, 1);
+INSERT INTO RBS.Room VALUES (9, 5, 1, 1,'TA Room 1');
+INSERT INTO RBS.Room VALUES (10, 5, 1, 1,'TA Room 2');
 --meeting rooms can be booked from 3 to 15 people
-INSERT INTO RBS.Room VALUES (11, 6, 3, 15);
-INSERT INTO RBS.Room VALUES (12, 6, 3, 15);
+INSERT INTO RBS.Room VALUES (11, 6, 3, 15,'Meeting Room 1');
+INSERT INTO RBS.Room VALUES (12, 6, 3, 15,'Meeting Room 2');
 
 --students can book: study desk, computer lab desk, meeting room
 INSERT INTO RBS.RoomUserRole VALUES (1, 4, 1);
