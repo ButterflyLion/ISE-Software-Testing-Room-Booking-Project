@@ -156,7 +156,7 @@ def index():
                         con.commit()
 
                     except Exception as e:
-                        #print("Error inserting data:", e)
+                        print("Error inserting data:", e)
                         err = e
                         con.rollback()
 
