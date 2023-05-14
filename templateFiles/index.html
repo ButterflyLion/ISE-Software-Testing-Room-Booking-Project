@@ -107,7 +107,7 @@
 
       <div class="form-step form-step-active">
         <div class="input-group">
-          <label for="guests">Number of Guest</label>
+          <label for="guests">Number of Guests</label>
           <input type="number" name="guests" id="guests" />
         </div>
         <div class="btns-group">
@@ -243,7 +243,7 @@
           <div class="button_container" style="  display: grid;grid-template-columns: repeat(3, 1fr); grid-gap: 10px;"></div>
             {% for key, row in ASlots.items() %}
             
-            <button type="submit" class="btn hourbtn" style="display:unset;" slotid="{{ row["slot_id"] }}">{{ row["start"] }} - {{ row["end"] }}</button>
+            <button type="submit" class="btn hourbtn" style="display:unset;" slotid="{{ row['slot_id'] }}">{{ row["start"] }} - {{ row["end"] }}</button>
             {% endfor %}
           </div>
 
