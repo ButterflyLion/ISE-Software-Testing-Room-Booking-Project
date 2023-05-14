@@ -1,7 +1,7 @@
-INSERT INTO RBS.Role VALUES (1, 'admin');
-INSERT INTO RBS.Role VALUES (2, 'staff');
-INSERT INTO RBS.Role VALUES (3, 'faculty');
-INSERT INTO RBS.Role VALUES (4, 'student');
+INSERT INTO RBS.Role VALUES (1, 'Admin');
+INSERT INTO RBS.Role VALUES (2, 'Staff');
+INSERT INTO RBS.Role VALUES (3, 'Faculty');
+INSERT INTO RBS.Role VALUES (4, 'Student');
 INSERT INTO RBS.Role VALUES (5, 'TA');
 
 INSERT INTO RBS.Users VALUES (1, 'William', 'Walker', '1@studentmail.ul.ie','827ccb0eea8a706c4c34a16891f84e7b', '+353000000000', 4);
