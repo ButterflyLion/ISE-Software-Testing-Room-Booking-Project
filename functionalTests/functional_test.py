@@ -14,7 +14,7 @@ options.add_argument("--start-maximized")
 # create a new browser object, by default it is firefox. If headless is set to true then it will open a browser but you won't see it.
 browser = Browser('chrome', **executable_path, headless=False, options=options)
 # specify what page we want it to visit
-url = 'http://localhost:5000'
+url = 'http://127.0.0.1:5000'
 browser.visit(url)
 # first we want it to login
 # find idnum element
@@ -35,8 +35,13 @@ no_of_guests = browser.find_by_id("guests").fill(1)
 next_button = browser.find_by_name("submit").click()
 
 # Rooms page:
+assert browser.is_element_present_by_id("tbl"), "Table not found"
+headers = ["Room Description", "Min Capacity", "Max Capacity", "Book This"]
+for header in headers:
+    assert browser.is_text_present(header), f"Header '{header}' not found"
+
 table = browser.find_by_id("tbl")
-button_class = "btn bookbtn"
+button_class = "btn-bookbtn"
 button = table.find_by_css(button_class).first
 button.click()
 
