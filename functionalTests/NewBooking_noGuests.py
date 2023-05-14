@@ -19,6 +19,7 @@ if(browser.url == "http://127.0.0.1:5000/index"):
         if(browser.is_element_present_by_name("guests")):
             browser.find_by_name("submit").click()
             assert browser.is_element_not_present_by_id("tbl"), "Error: table exists for null guests entered"
+            print("There is no option to book a room without specifying the number of guests.")
         
         else:
             assert browser.is_element_present_by_name("guests"), "Input field for specifying no. of guests doesn't exist"
