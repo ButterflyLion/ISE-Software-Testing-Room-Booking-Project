@@ -58,17 +58,41 @@
       <div class="form-step form-step-active">
         <div class="input-group">
           <div>
-            Welcome {{ session.firstname }} {{ session.lastname }} <br>
-            Rolo: {{ session.userrole }}</div>
+            <h1>Welcome {{ session.firstname }} {{ session.lastname }}</h1> <br>
+            <h3>Role: {{ session.userrole }}</h3></div>
 
-          <div>
+          {% if err %}
 
-            Here are your previous bookings
-            </br>
-            To be implemented
-            </br>
+            <span style="color: red"> {{ err }}</span>
 
-          </div>
+          {% elif MyBookings|length == 0 %}
+            <span>You have no bookings at present</span>
+
+          {% else %}
+          
+          <table class="table" id="tbl">
+            <thead style="background-color: rgb(11, 78, 179); color: #f3f3f3">
+              <tr>
+                <th scope="col" style="width:150px;">Room Description</th>
+                <th scope="col">Date</th>
+                <th scope="col">TimeSlot</th>
+                <th scope="col">Guests</th>
+              </tr>
+            </thead>
+            <tbody id="myTable" style="background-color: rgb(235, 240, 245)">
+              <!-- first-row -->
+              {% for row in MyBookings %}
+              <tr>
+                <td>{{ row["roomdesc"] }}</td>
+                <td>{{ row["bdate"].strftime('%d/%m/%y') }}</td>
+                <td>{{ row["start"] }} - {{ row["end"] }}</td>
+                <td>{{ row["guests"] }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+          {% endif %}
 
         </div>
         <div class="btns-group">
@@ -107,6 +131,8 @@
             <span>No rooms found</span>
 
           {% else %}
+
+          <h3> Available Rooms for {{ session.firstname }} {{ session.lastname }}</h3>
           
           <table class="table" id="tbl">
             <thead style="background-color: rgb(11, 78, 179); color: #f3f3f3">
@@ -151,23 +177,29 @@
 
           {% else %}
 
+          <h3> Available Dates for this Room</h3>
+
           <div id="datepicker" style="  display: flex;justify-content: center;align-items: center;"></div>
           <script>      
             $( function() {
               // Get today's date
                   var today = new Date();
+                  console.log(today)
 
                   // Calculate tomorrow's date
                   // Calculate the date one month from today
                   var oneMonthFromToday = new Date();
+                  console.log(oneMonthFromToday)
                   oneMonthFromToday.setMonth(today.getMonth() + 1);
 
                   // Initialize the datepicker with the minDate and maxDate options
                   $('#datepicker').datepicker({
                     minDate: today, // set the minimum date to today
+                    //A Bug Here, not matter what, I will not let users chose today's date
                     maxDate: oneMonthFromToday, // set the maximum date to tomorrow
                     beforeShowDay: function(date) {
                       // Disable all dates before today and after tomorrow
+                      
                       if (date < today || date > oneMonthFromToday) {
                         return [false];
                       }
@@ -183,9 +215,6 @@
     
           </script>
           {% endif %}
-
-          
-
 
           
         </div>
@@ -209,6 +238,8 @@
           <span style="color: red"> {{ err }}</span>
 
           {% else %}
+          <h3> Available Time Slots for this date</h3>
+
           <div class="button_container" style="  display: grid;grid-template-columns: repeat(3, 1fr); grid-gap: 10px;"></div>
             {% for key, row in ASlots.items() %}
             
@@ -239,7 +270,7 @@
 
           {% else %}
 
-          <h>You have selected the following:</h>
+          <h3>You have selected the following:</h3>
 
           <table class="table" id="tbl" style="width: 100%">
             <tbody id="myTable" style="background-color: rgb(235, 240, 245)">
@@ -269,6 +300,30 @@
           <input type="hidden" name="sdate" value="{{ SelectedDate }}">
           <input type="hidden" name="shour" value="{{ SSlot }}">
           <button type="submit" class="btn btn-next" name="submit">Confirm</button>
+        </div>
+      </div>
+
+      {% endif %}
+
+
+      {% if stage == "submit" %}
+
+      <div class="form-step form-step-active">
+        <div class="input-group">
+          {% if err %}
+
+          <span style="color: red"> {{ err }}</span>
+
+          {% else %}
+
+              <div>Submission was a success</div>
+
+          {% endif %}
+
+        </div>
+        <div class="btns-group">
+          <input type="hidden" name="s" value="main">
+          <button type="submit" class="btn btn-next" name="submit">Close</button>
         </div>
       </div>
 
