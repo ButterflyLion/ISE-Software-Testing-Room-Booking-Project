@@ -13,7 +13,7 @@ Room Booking Project for Software Testing module for CS4442. Built using flask o
 <p>
 Download the container from <a href = "https://hub.docker.com/r/gvenzl/oracle-xe">this link.</a>.<br>
 Initiate the docker instance using following command (execute in terminal):<br>
-docker run -d -p 1522:1521 -e ORACLE_PASSWORD=root --name room-booking-project gvenzl/oracle-xe<br>
+docker run -d -p 1521:1521 -e ORACLE_PASSWORD=root --name room-booking-project gvenzl/oracle-xe<br>
 This initialises a new docker container.
 </p>
 </details>
@@ -22,7 +22,7 @@ This initialises a new docker container.
 <p>
 1. Open DBeaver.<br>
 2. Establish a connection with the database using credentials of SYSTEM. For this go to Database -> New Database Connection. Select Oracle, next and fill in the following details:<br>
-Host: localhost, Port: 1522, Database: XEPDB1, Username: SYS, Role: SYSDBA, Password: root.
+Host: localhost, Port: 1521, Database: XEPDB1, Username: SYS, Role: SYSDBA, Password: root.
 </p>
 </details>
 
