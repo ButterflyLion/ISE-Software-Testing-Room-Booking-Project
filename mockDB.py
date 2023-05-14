@@ -11,11 +11,11 @@ from mock import patch
 import main
 
 ORACLEDB_DB = "RBS"
-ORACLEDB_PASSWORD = "paswrd"
+ORACLEDB_PASSWORD = "root"
 ORACLEDB_USER = "SYSTEM"
 ORACLEDB_HOST = "localhost"
 ORACLEDB_PORT = 1521
-ORACLEDB_SERVICE = "ORCL"
+ORACLEDB_SERVICE = "XEPDB1"
 
 class MockDB(TestCase):
 
