@@ -376,7 +376,7 @@ def get_rooms_accessible_to_role(NoGuests = False):
             for row in rows:
                 room ={
                     "room_id": row[0],
-                    "description": row[4],
+                    "description": row[5],
                     "min": row[2],
                     "max": row[3]
                 }
