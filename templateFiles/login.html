@@ -9,15 +9,23 @@
 </head>
 <body>
     <div class="box" style="background-color:grey;">
-        <form action="/homepage">
+        <form action="{{ url_for('login') }}" method="POST">
             <span><label for="id"><b>Student/Staff ID:</b></label><br><br>
             <!--input type="text" id="idnum" placeholder="e.g. 22123456" pattern="(\d{8})" required-->
-            <input type="text" id="username" placeholder="eg myname@email.com" required>
+            <input type="text" name="username" placeholder="e.g. myidnum@email.com" required>
             <br><br>
             <label for="password"><b>Password:</b></label><br><br>
-            <input type="text" id="password" placeholder="e.g. &#9679;&#9679;&#9679;&#9679;&#9679;" required><br><br>
+            <input type="text" name="password" placeholder="e.g. &#9679;&#9679;&#9679;&#9679;&#9679;" required><br><br>
             <input type="submit" value="Log In"></span>
         </form>
+
+        <div class="form-group col-md-6">
+            <span style="color: red;">
+              {% if err %}
+              {{ err }}
+              {% endif %}
+            </span>
+          </div>
     <div>
 </body>
 </html>
