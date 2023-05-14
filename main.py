@@ -114,7 +114,7 @@ def index():
             if err == False and stage in ['confirm','submit']:
 
                 if SSlot and SSlot in ASlots:
-                    print('confirm')
+                    print('')
                 else:
                     err = "Invalid Slot!"
 
