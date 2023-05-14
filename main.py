@@ -117,6 +117,31 @@ def index():
 
 
             if err == False and stage == 'submit':
+
+                cur.execute("SELECT MAX(booking_id) FROM RBS.BOOKING")
+                result = cur.fetchone()
+                print(result)
+                last_booking_id = result[0]
+
+                # If there is no previous booking in the table, set the booking_id to 1
+                if last_booking_id is None:
+                    booking_id = 1
+                else:
+                    # Otherwise, increment the last booking_id value by 1 to generate the new booking_id
+                    booking_id = last_booking_id + 1
+
+                print(booking_id)
+
+                try: 
+                    cur.execute("INSERT INTO RBS.BOOKING(booking_id, user_id, room, b_day, time_slot, num_people, b_status) VALUES (:0, :1, :2,:3,:4,:5,:6)", 
+                                (booking_id, session['userid'], Room_id, date_to_check, SSlot, NoGuests, 1))     
+                    con.commit()
+
+                except Exception as e:
+                    print("Error inserting data:", e)
+                    err = e
+                    con.rollback()
+
                 # Close the cursor and connection as we are redirecting the page here already
 
                 print(NoGuests)
