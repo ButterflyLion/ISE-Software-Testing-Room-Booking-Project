@@ -4,15 +4,13 @@ import oracledb
 import hashlib
 
 # Replace with your actual Oracle database credentials
-config = {
-    'host': 'localhost',
-    'user': 'SYS',
-    'password': 'root',
-    'port': 1522,
-    'service_name': 'ORCL'
-}
+
+user = 'SYSTEM'
+password = 'root'
+port = 1521
+service_name = 'XEPDB1'
 conn_string = "localhost:{port}/{service_name}".format(
-    port=config['port'], service_name=config['service_name'])
+    port=port, service_name=service_name)
 app = Flask(__name__, template_folder='templateFiles', static_folder='staticFiles')
 
 # This is for login Sessions
@@ -37,7 +35,7 @@ def index():
         data = []
         NoGuests = 0
 
-        con = oracledb.connect(user=config['user'], password=config['password'], dsn=conn_string)
+        con = oracledb.connect(user=user, password=password, dsn=conn_string)
         cur = con.cursor()
         
         stage = request.form.get('s', 'main') #is s is posted, set stage to that otherwise set it to main.
@@ -110,7 +108,7 @@ def login():
         passh = hashlib.md5(request.form['password'].encode()).hexdigest()
         
         #Connecting to database
-        con = oracledb.connect(user=config['user'], password=config['password'], dsn=conn_string)
+        con = oracledb.connect(user=user, password=password, dsn=conn_string)
 
         with con.cursor() as cursor:
             cursor.execute("SELECT RBS.USERS.*, RBS.ROLE.u_role FROM RBS.USERS \
@@ -149,7 +147,7 @@ def get_rooms_accessible_to_role(NoGuests = False):
 
     if NoGuests > 0 :
 
-        con = oracledb.connect(user=config['user'], password=config['password'], dsn=conn_string)
+        con = oracledb.connect(user=user, password=password, dsn=conn_string)
         cur = con.cursor()
 
         cur.execute("SELECT room_type_id FROM RBS.RoomUserRole WHERE user_role_id = :userroleid", {'userroleid': session['userroleid']})

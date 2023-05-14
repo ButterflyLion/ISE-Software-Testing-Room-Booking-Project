@@ -18,14 +18,34 @@ url = 'http://localhost:5000'
 browser.visit(url)
 # first we want it to login
 # find idnum element
-user_id_box = browser.find_by_id("idnum")
+username_box = browser.find_by_name("username")
 # fill out the element
-user_id_box.fill(1)
+username_box.fill("1@studentmail.ul.ie")
 # find the password element and fill
-password = browser.find_by_id("password").fill("pswrd")
-
+password_box = browser.find_by_name("password").fill("12345")
 # click the login button
-submit = browser.find_by_value("Log In").first.click()
+login = browser.find_by_value("Log In").first.click()
+
+# Welcome page:
+make_a_booking_button = browser.find_by_name("submit").click()
+
+# Guests page:
+no_of_guests = browser.find_by_id("guests").fill(1)
+# click next button
+next_button = browser.find_by_name("submit").click()
+
+# Rooms page:
+table = browser.find_by_id("tbl")
+button_class = "btn bookbtn"
+button = table.find_by_css(button_class).first
+button.click()
+
+# Dates page:
+
+# Hours page:
+
+# Confirm page:
+
 
 
 browser.quit()
