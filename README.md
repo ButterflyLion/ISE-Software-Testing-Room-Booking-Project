@@ -102,6 +102,16 @@ The code should exit with :
 
 4. 'mockTests' folder contains two files: mockDB.py and mockDB_test.py. These are incomplete tests that were written but not finished due to them being lower in priority than the other tests we were writing. However, we decided to include them too, even if they're incomplete.
 
+5. Coverage Tests:
+- pip install coverage
+- coverage run .\Unit_Tests.py
+- coverage report -m
+- coverage html
+
+6. Mutation Testing:
+- pip install mutmut
+- mutmut run --paths-to-mutate=./main.py --tests-dir=./ --runner="python -m unittest Unit_Tests.py"
+
 
 ### Brief Outline of Features/Tests:
 1. In Unit Testing, we organize our tests into separate classes, each representing a specific function of the application. These classes contain various methods that test different scenarios, including valid and invalid cases.<br> 
@@ -126,6 +136,37 @@ Here is the list of the classes:<br>
 - TestBookingSameRoomTimeAndDate<br>
 - TestBookingMoreThanTwiceADay<br>
 
+4. Coverage tests involves testing to see how good our tests are. The main premise of it is to check how many lines of code is being tested in the main.py file and dividing that by the number of lines of code that is in that main.py file. According to <a href = "https://learn.microsoft.com/en-us/answers/questions/778016/test-coverage-definition-unit-testing">Microsoft</a>: "Optimal Test Coverage Rate: Keeping it between 70 - 80%" while "Overkill Test Coverage Rate: Keeping it between 80 - 100%".<br>
+
+Results of our Coverage Tests:
+
+Module	   statements	   missing	   excluded	   coverage<br><br>
+
+Unit_Tests.py&nbsp;&nbsp;&nbsp;&nbsp;324&nbsp;&nbsp;&nbsp;&nbsp;136&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;58%<br>
+main.py&nbsp;&nbsp;&nbsp;&nbsp;228&nbsp;&nbsp;&nbsp;&nbsp;57&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;75%<br>
+Total&nbsp;&nbsp;&nbsp;&nbsp;552&nbsp;&nbsp;&nbsp;&nbsp;193&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;65%<br>
+
+The line to focus on is the coverage of the main.py. This is because this line describes how many lines of the source code is being tested by the Unit_Tests.py file. As we can see, we have a coverage of 75% which is in the optimal range.
+
+5. Mutation Testing
+Mutation tests means altering the source code to see if the tests are adequate. Good tests would mean that the mutated code would fail, and so that mutation is killed off. A bad test case wouldn't catch the fact that the code was altered, meaning that the mutation survives. It is better to have a high percent of killed tests as it shows that the test suites are effective.<br><br>
+
+Results of Mutation Testing:<br>
+
+Legend for output:<br>
+🎉 Killed mutants.   The goal is for everything to end up in this bucket. <br>
+⏰ Timeout.          Test suite took 10 times as long as the baseline so were killed.<br>
+🤔 Suspicious.       Tests took a long time, but not long enough to be fatal. <br>
+🙁 Survived.         This means your tests need to be expanded. <br>
+🔇 Skipped.          Skipped. <br><br>
+
+
+392/392  🎉 315  ⏰ 4  🤔 2  🙁 71  🔇 0 <br><br>
+
+This is the form that mutmut outputs after all of the mutation tests are complete. As we can see, we have 315 killed mutations, 4 timed-out mutations, 2 mutations that took longer than usual, 71 mutations that survived and 0 mutations that skipped.<br>
+
+Our tests have an 80% success rate (this means that the mutation was killed). We have 315 successes out of the 392 total mutations.
+
 ### Percentage Contribution by each Group Member with a Brief Description:
 As a team we decided on the database schema together and wrote the requirements together.<br>
 - Pardis: 50%<br>
@@ -135,5 +176,6 @@ I modified and expanded the database by incorporating additional fields and data
 I set up the database, wrote the executable sql script to create the tables and wrote the sample data to fill the tables with. I also started the flask application and the layout of the current website. I documented these steps in the Setup Guide. Next I attempted to mock a database but this proved more challenging than expected so I did integration testing instead and left mocking until last. I never did get around to completely finish the mocking as there were connection errors.<br>
 
 - Conor: 15%<br>
+I wrote html code for the start of the project. This includes the login page and the homepage of the project. It didn't end up being used in our project but it gave a basis for our html files. I did coverage testing and mutation testing. The coverage testing involves testing the effectiveness of the unit tests and i generated a html report of the coverage. I also did mutation testing which was particularly a challenge but our tests passed them well.<br>
 
 ## Team Members: Pardis Norouzi, Tamara Orosz & Conor Glynn
