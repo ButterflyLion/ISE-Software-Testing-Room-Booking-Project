@@ -1,5 +1,6 @@
 import selenium
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
 from selenium import webdriver
 import time
 
@@ -16,28 +17,56 @@ password_field.send_keys("12345")
 password_field.send_keys(Keys.RETURN)
 
 # wait for the system to load and verify that the user has successfully logged in
-time.sleep(5)  # wait for 5 seconds to let the page load
+time.sleep(2)  # wait for 5 seconds to let the page load
 assert "Welcome" in driver.page_source
 
 # navigate to the next page and click on the Make a Booking button
-driver.get("http://127.0.0.1:5000/index")
-make_booking_button = driver.find_element("name" , "submit").click()
+driver.find_element("name" , "submit").click()
 
 # navigate to the booking page and enter the number of guests
-driver.get("http://127.0.0.1:5000/index")
 guests_field = driver.find_element("name" , "guests")
 guests_field.send_keys("1")
-submit_button = driver.find_element("name", "submit").click()
+guests_field.send_keys(Keys.RETURN)
+#submit_button = driver.find_element("name", "submit").click()
 
 # wait for the system to load and verify that the booking was successful
-time.sleep(5)  # wait for 5 seconds to let the page load
-assert "Booking Successful" in driver.page_source
+time.sleep(2)  # wait for 5 seconds to let the page load
+assert "Available Rooms for" in driver.page_source
 
-# driver.get("http://127.0.0.1:5000/index")
-# make_booking_button = driver.find_element("name" , "s").click()
-
+driver.find_element("id" , "2").click()
 
 
+# wait for the system to load and verify that the booking was successful
+time.sleep(2)  # wait for 5 seconds to let the page load
+assert "Available Dates for" in driver.page_source
+
+# Locate the datepicker input element and click on it
+datepicker = driver.find_element("id", "datepicker")
+datepicker.click()
+
+
+# Click on the datepicker input element again to close the widget (if necessary)
+datepicker.click()
+
+# Select the desired date in the datepicker widget
+date_element = driver.find_element(By.XPATH, "//a[@data-date='25']")
+date_element.click()
+
+driver.find_element("name" , "submit").click()
+
+time.sleep(3) 
+
+driver.find_element(By.CSS_SELECTOR, ".hourbtn:first-of-type").click()
+
+time.sleep(3)
+
+driver.find_element("name" , "submit").click()
+
+time.sleep(3)
+
+driver.find_element("name" , "submit").click()
+
+time.sleep(10)
 
 
 
