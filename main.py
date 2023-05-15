@@ -13,6 +13,13 @@ conn_string = "localhost:{port}/{service_name}".format(
     port=port, service_name=service_name)
 app = Flask(__name__, template_folder='templateFiles', static_folder='staticFiles')
 
+#config = {
+#    "host": "localhost",
+#    "user": user,
+#    "password": password,
+#    "service_name": service_name
+#}
+
 # This is for login Sessions
 app.secret_key = 'RBS-Secret' 
 

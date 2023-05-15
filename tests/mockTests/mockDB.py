@@ -3,11 +3,11 @@
 # from unittest.mock import MagicMock
 #db = MagicMock()
 
+from errno import errorcode
+from unittest.mock import patch
 import oracledb
-from oracledb import errorcode
-import unittest
+import oracledb.errors
 from unittest import TestCase
-from mock import patch
 import main
 
 ORACLEDB_DB = "RBS"
@@ -22,14 +22,13 @@ class MockDB(TestCase):
     @classmethod
     def setUpClass(cls):
         # define database connection
+        CONN_STRING = "localhost:{port}/{service_name}".format(port=ORACLEDB_PORT, service_name=ORACLEDB_SERVICE)
         cnx = oracledb.connect(
-            host=ORACLEDB_HOST,
             user=ORACLEDB_USER,
-            password=ORACLEDB_PASSWORD, 
-            port=ORACLEDB_PORT,
-            service_name=ORACLEDB_SERVICE
+            password=ORACLEDB_PASSWORD,
+            dsn=CONN_STRING
         )
-        cursor = cnx.cursor(dictionary=True)
+        cursor = cnx.cursor()
 
         # if database is already created, drop it
         try:
@@ -39,7 +38,7 @@ class MockDB(TestCase):
         except oracledb.Error as err:
             print("{}{}".format(ORACLEDB_DB, err))
 
-        cursor = cnx.cursor(dictionary=True)
+        cursor = cnx.cursor()
 
         # create database
         try:
@@ -58,10 +57,10 @@ class MockDB(TestCase):
             cursor.execute(sql1)
             cnx.commit()
         except oracledb.Error as err:
-            if err.errno == errorcode.ER_TABLE_EXISTS_ERROR:
+            if err == errorcode:
                 print("test_table already exists.")
             else:
-                print(err.msg)
+                print(err)
         else:
             print("Tables successfully created.")
 
@@ -73,7 +72,7 @@ class MockDB(TestCase):
             cursor.execute(sql2)
             cnx.commit()
         except oracledb.Error as err:
-            print("Data insertion to test_table failed \n" + err)
+            print("Data insertion to test_table failed \n" + str(err))
         cursor.close()
         cnx.close()
 
@@ -91,7 +90,7 @@ class MockDB(TestCase):
         cnx = oracledb.connect(
             host=ORACLEDB_HOST, user=ORACLEDB_USER, password=ORACLEDB_PASSWORD
         )
-        cursor = cnx.cursor(dictionary=True)
+        cursor = cnx.cursor()
 
         # drop test database
         try:
