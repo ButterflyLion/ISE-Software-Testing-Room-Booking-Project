@@ -1,2 +1,4 @@
 __pycache__/
 .coverage
+.mutmut-cache
+main.py.bak
