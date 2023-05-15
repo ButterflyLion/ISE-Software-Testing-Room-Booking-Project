@@ -1,5 +1,6 @@
 # ISE-Software-Testing-Room-Booking-Project
-Room Booking Project for Software Testing module for CS4442. Built using flask on an oracle database.
+Project for Software Testing module for CS4442. Built using flask on an oracle database.
+
 # Setup Guide
 <details><summary><b>Installing software</b></summary>
 <p>
@@ -51,9 +52,26 @@ Host: localhost, Port: 1521, Database: XEPDB1, Username: SYS, Role: SYSDBA, Pass
 </p>
 </details>
 
-## Team Members: Pardis Norouzi, Tamara Orosz & Conor Glynn
 ### About Our Project:
+The goal of this project was to design, build and test a room booking system.
+Our web based application allows individuals associated with ISE (Immerisve Software Engineering course at the University of Limerick) to book its rooms for personal use.
+
+#### Individuals in the system:
+1. Roles they play in ISE: Admin of the system, Students, Teaching Assistants (referred to as TAs), Teaching Staff (referred to as faculty) and Staff.
+2. Each person logs in to the system with their university provided email address and their password.
+3. They can book rooms for themselves and on behalf of a group of people.
+4. They can view their previous bookings.
+#### Rooms:
+1. There are six types of 'rooms' available for booking: study desk, computer lab desk, conference room, meeting room, classroom and TA space.
+2. Every room has a specified minimum and maximum capacity of people it can be booked for. The system will show suitable rooms for the number of people an individual wishes to book for.
+#### Time table:
+1. The rooms can be booked every day of the week, regardless of weekends or public holidays.
+2. The building is open from 8am to 9pm, which means the rooms can be booked from 8am to 9pm every day.
+3. One booking refers to a one hour slot which is picked by the individual from the available times in the system.
+
 ### How to Run Our Project and its Automated Tests:
 To run functional_test.py simply run main.py first and then run functional_test.py. The code should exit with code=0 if the automated tests passed, i.e. the webpage functions as intended.
 ### Brief Outline of Features/Tests:
 ### Percentage Contribution by each Group Member with a Brief Description:
+
+## Team Members: Pardis Norouzi, Tamara Orosz & Conor Glynn
