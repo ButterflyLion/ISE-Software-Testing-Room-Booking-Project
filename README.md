@@ -102,6 +102,16 @@ The code should exit with :
 
 4. 'mockTests' folder contains two files: mockDB.py and mockDB_test.py. These are incomplete tests that were written but not finished due to them being lower in priority than the other tests we were writing. However, we decided to include them too, even if they're incomplete.
 
+5. Coverage Tests:
+- pip install coverage
+- coverage run .\Unit_Tests.py
+- coverage report -m
+- coverage html
+
+6. Mutation Testing:
+- pip install mutmut
+- mutmut run --paths-to-mutate=./main.py --tests-dir=./ --runner="python -m unittest Unit_Tests.py"
+
 
 ### Brief Outline of Features/Tests:
 1. In Unit Testing, we organize our tests into separate classes, each representing a specific function of the application. These classes contain various methods that test different scenarios, including valid and invalid cases.<br> 
