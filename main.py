@@ -38,19 +38,12 @@ def index():
         SelectedDate = False
         SSlot = False
         ARooms = False
-        MyBookings = []
 
         con = oracledb.connect(user=user, password=password, dsn=conn_string)
         cur = con.cursor()
         
         stage = request.form.get('s', 'main') #is s is posted, set stage to that otherwise set it to main.
-        #  print(request.form)
-
-        if stage == 'main':
-            mybs = get_my_bookings()
-            if mybs:
-                MyBookings = mybs
-        
+        print(request.form)
 
         if request.method == 'POST':
 
@@ -96,7 +89,7 @@ def index():
                         SelectedDate = False
 
                     if err == False and date_to_check: 
-                        if date_to_check in slotsarray and len(slotsarray[date_to_check]) > 0:
+                        if date_to_check in slotsarray:
                             # If the date exists, get the available slots for that date
                             slots_for_date = slotsarray[date_to_check]
                             #print(f"Available time slots for {date_to_check}: {slots_for_date}")
@@ -114,59 +107,63 @@ def index():
             if err == False and stage in ['confirm','submit']:
 
                 if SSlot and SSlot in ASlots:
-                    print('')
+
+                        print('confirm')
+
                 else:
                     err = "Invalid Slot!"
 
-
+                print('here')
 
 
             if err == False and stage == 'submit':
 
+                cur.execute("SELECT MAX(booking_id) FROM RBS.BOOKING")
+                result = cur.fetchone()
+                print(result)
+                last_booking_id = result[0]
 
+                # If there is no previous booking in the table, set the booking_id to 1
+                if last_booking_id is None:
+                    booking_id = 1
+                else:
+                    # Otherwise, increment the last booking_id value by 1 to generate the new booking_id
+                    booking_id = last_booking_id + 1
 
-                check1 = submitted_more_than_two_in_day(date_to_check)
-                if check1:
-                    err = 'You can not submit more than twice in a day'
+                print(booking_id)
 
-                check2 = submiting_in_two_rooms_sametime(date_to_check,SSlot)
-                if check2:
-                    err = 'You can not book two rooms at the same time'
+                try: 
+                    cur.execute("INSERT INTO RBS.BOOKING(booking_id, user_id, room, b_day, time_slot, num_people, b_status) VALUES (:0, :1, :2,:3,:4,:5,:6)", 
+                                (booking_id, session['userid'], Room_id, date_to_check, SSlot, NoGuests, 1))     
+                    con.commit()
 
+                except Exception as e:
+                    print("Error inserting data:", e)
+                    err = e
+                    con.rollback()
 
-                if err == False:
+                # Close the cursor and connection as we are redirecting the page here already
 
-                    cur.execute("SELECT MAX(booking_id) FROM RBS.BOOKING")
-                    result = cur.fetchone()
-                    #print(result)
-                    last_booking_id = result[0]
+                print(NoGuests)
 
-                    # If there is no previous booking in the table, set the booking_id to 1
-                    if last_booking_id is None:
-                        booking_id = 1
-                    else:
-                        # Otherwise, increment the last booking_id value by 1 to generate the new booking_id
-                        booking_id = last_booking_id + 1
+                print(ARooms)
+                print(ARooms[Room_id])
 
-                    #print(booking_id)
+                print(SelectedDate)
 
-                    try: 
-                        cur.execute("INSERT INTO RBS.BOOKING(booking_id, user_id, room, b_day, time_slot, num_people, b_status) VALUES (:0, :1, :2,:3,:4,:5,:6)", 
-                                    (booking_id, session['userid'], Room_id, date_to_check, SSlot, NoGuests, 1))     
-                        con.commit()
+                print(ASlots)
+                print(ASlots[SSlot])
 
-                    except Exception as e:
-                        print("Error inserting data:", e)
-                        err = e
-                        con.rollback()
-
-        
+                cur.close()
+                con.close()
+                print('submit')
+                return redirect(url_for('index'))
 
 
         # Close the cursor and connection
         cur.close()
         con.close()
-        return render_template('index.html',stage=stage,err=err,data=data,NoGuests=NoGuests,Room_id=Room_id,ASlots=ASlots,SelectedDate=SelectedDate,ARooms=ARooms,SSlot=SSlot,MyBookings=MyBookings)
+        return render_template('index.html',stage=stage,err=err,data=data,NoGuests=NoGuests,Room_id=Room_id,ASlots=ASlots,SelectedDate=SelectedDate,ARooms=ARooms,SSlot=SSlot)
         
 
 @app.route('/', methods=['GET', 'POST'])
@@ -190,7 +187,7 @@ def login():
         con = oracledb.connect(user=user, password=password, dsn=conn_string)
 
         with con.cursor() as cursor:
-            cursor.execute("SELECT RBS.USERS.*, RBS.ROLE.u_role FROM RBS.USERS \
+            cursor.execute("SELECT RBS.USERS.*, RBS.Role.u_role FROM RBS.USERS \
                            LEFT JOIN RBS.Role ON RBS.USERS.role_id = RBS.Role.role_id \
                            WHERE LOWER(RBS.USERS.email) = LOWER(:email)", {"email": username})
             result = cursor.fetchone()
@@ -227,74 +224,6 @@ def check_number(number=False):
     else:
         return False
 
-def get_my_bookings():
-    userid = session['userid']
-
-    con = oracledb.connect(user=user, password=password, dsn=conn_string)
-    cur = con.cursor()
-
-    MyBookings = []
-    cur.execute('SELECT RBS.Booking.*,RBS.ROOM.room_type,RBS.ROOM.room_desc,RBS.TIMESLOT.start_time,RBS.TIMESLOT.end_time FROM RBS.booking \
-                LEFT JOIN RBS.ROOM ON RBS.booking.ROOM = RBS.ROOM.room_id \
-                LEFT JOIN RBS.TIMESLOT ON RBS.booking.time_slot = RBS.TIMESLOT.time_slot_id \
-                WHERE user_id = :userid',userid=session['userid'])
-    mybs = cur.fetchall() 
-    for row in mybs:
-        MyBookings.append({"booking_id": row[0], "roomid": row[2] ,"bdate": row[3],"timeslotid": row[4],"guests": row[5],"roomdesc": row[8],"start": row[9].strftime('%H:%M'),"end": row[10].strftime('%H:%M')})
-
-       
-
-    cur.close()
-    con.close()
-
-    return MyBookings
-
-
-def submiting_in_two_rooms_sametime(date_to_check=False,SSlot=False):
-    if date_to_check == False or SSlot == False:
-        return False    
-    
-    con = oracledb.connect(user=user, password=password, dsn=conn_string)
-    cur = con.cursor()
-
-
-    cur.execute('SELECT COUNT(*) FROM RBS.booking WHERE b_day = :sdate AND user_id = :userid AND time_slot = :time_slot ',sdate=date_to_check,userid=session['userid'],time_slot=SSlot)
-
-    # get the count of rows
-    count = cur.fetchone()[0]    
-
-
-    cur.close()
-    con.close()
-
-    if count>0 :
-        return True
-    else:
-        return False    
-
-
-def submitted_more_than_two_in_day(date_to_check=False):
-
-    if date_to_check == False:
-        return False
-    
-    con = oracledb.connect(user=user, password=password, dsn=conn_string)
-    cur = con.cursor()
-
-
-    cur.execute('SELECT COUNT(*) FROM RBS.booking WHERE b_day = :sdate AND user_id = :userid',sdate=date_to_check,userid=session['userid'])
-
-    # get the count of rows
-    count = cur.fetchone()[0]    
-
-    cur.close()
-    con.close()
-
-    if count>=2 :
-        return True
-    else:
-        return False
-
 
 
 
@@ -309,9 +238,10 @@ def get_all_available_time_slots(Room_id = False):
     cur = con.cursor()
 
     # Set the date range to check for bookings
-    start_date = datetime.date.today() + datetime.timedelta(days=1) # First day from tomorrow
+    start_date = datetime.date.today() # First day of current month
     end_date = start_date.replace(month=start_date.month+1) - datetime.timedelta(days=1)  # Last day of current month
-
+    print(start_date)
+    print(end_date)
 
     cur.execute('SELECT TIME_SLOT_ID FROM RBS.TIMESLOT')
     time_slots = [row[0] for row in cur.fetchall()]
@@ -319,14 +249,12 @@ def get_all_available_time_slots(Room_id = False):
     cur.execute("SELECT b_day, time_slot FROM RBS.booking WHERE b_day BETWEEN :start_date AND :end_date AND room = :Room_id",
                     {'start_date': start_date, 'end_date': end_date,"Room_id":Room_id})
     bookings = cur.fetchall()
-    bookings = [(booking[0].date(), booking[1]) for booking in bookings]
 
     available_time_slots = {}
     
     # Loop through each date within the date range
     for day in range((end_date - start_date).days + 1):
         date = start_date + datetime.timedelta(days=day)
-
 
         # Initialize the available time slots for the current date
         available_time_slots[date] = time_slots.copy()
@@ -341,6 +269,8 @@ def get_all_available_time_slots(Room_id = False):
     # Print the available time slots for each date
 
     ret['slots'] = available_time_slots
+
+
 
     cur.close()
     con.close()
@@ -376,7 +306,7 @@ def get_rooms_accessible_to_role(NoGuests = False):
             for row in rows:
                 room ={
                     "room_id": row[0],
-                    "description": row[5],
+                    "description": row[4],
                     "min": row[2],
                     "max": row[3]
                 }
@@ -385,7 +315,6 @@ def get_rooms_accessible_to_role(NoGuests = False):
                 ret['rooms'][row[0]]=room
 
             ret['data']=data
-        
             ret['room_ids']=room_ids
             
 
