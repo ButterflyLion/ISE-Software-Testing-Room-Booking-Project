@@ -4,6 +4,7 @@ import oracledb
 import hashlib
 
 # Replace with your actual Oracle database credentials
+
 user = 'SYSTEM'
 password = 'root'
 port = 1521

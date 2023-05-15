@@ -1,16 +1,23 @@
 # https://medium.com/swlh/python-testing-with-a-mock-database-sql-68f676562461
-import oracledb.connector
-from oracledb.connector import errorcode
+
+# from unittest.mock import MagicMock
+#db = MagicMock()
+
+import oracledb
+from oracledb import errorcode
+import unittest
 from unittest import TestCase
 from mock import patch
+import main
 
+ORACLEDB_DB = "RBS"
+ORACLEDB_PASSWORD = "root"
+ORACLEDB_USER = "SYSTEM"
+ORACLEDB_HOST = "localhost"
+ORACLEDB_PORT = 1521
+ORACLEDB_SERVICE = "XEPDB1"
 
 class MockDB(TestCase):
-    ORACLEDB_HOST = "localhost"
-    ORACLEDB_PORT = "1522"
-    ORACLEDB_USER = "SYS"
-    ORACLEDB_PASSWORD = "root"
-    ORACLEDB_DB = "RBS"
 
     @classmethod
     def setUpClass(cls):
@@ -18,8 +25,9 @@ class MockDB(TestCase):
         cnx = oracledb.connect(
             host=ORACLEDB_HOST,
             user=ORACLEDB_USER,
-            password=ORACLEDB_PASSWORD,
-            port=ORACLEDB_PORT
+            password=ORACLEDB_PASSWORD, 
+            port=ORACLEDB_PORT,
+            service_name=ORACLEDB_SERVICE
         )
         cursor = cnx.cursor(dictionary=True)
 
@@ -32,6 +40,7 @@ class MockDB(TestCase):
             print("{}{}".format(ORACLEDB_DB, err))
 
         cursor = cnx.cursor(dictionary=True)
+
         # create database
         try:
             cursor.execute(
@@ -42,7 +51,7 @@ class MockDB(TestCase):
             exit(1)
         cnx.database = ORACLEDB_DB
 
-        # create table
+        # create tables
         with open('SetUpDatabase.sql', 'r') as f:
             sql1 = f.read()
         try:
@@ -72,7 +81,7 @@ class MockDB(TestCase):
             "host": ORACLEDB_HOST,
             "user": ORACLEDB_USER,
             "password": ORACLEDB_PASSWORD,
-            "database": ORACLEDB_DB,
+            "service_name": ORACLEDB_SERVICE
         }
         cls.mock_db_config = patch.dict(main.config, testconfig)
         cls.mock_db_config.start()
