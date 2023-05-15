@@ -173,5 +173,6 @@ As a team we decided on the database schema together and wrote the requirements 
 - Tamara: 35%<br>
 I set up the database, wrote the executable sql script to create the tables and wrote the sample data to fill the tables with. I also started the flask application and the layout of the current website. I documented these steps in the Setup Guide. Next I attempted to mock a database but this proved more challenging than expected so I did integration testing instead and left mocking until last. I never did get around to completely finish the mocking as there were connection errors.<br>
 - Conor: 15%<br>
+I wrote html code for the start of the project. This includes the login page and the homepage of the project. It didn't end up being used in our project but it gave a basis for our html files. I did coverage testing and mutation testing. The coverage testing involves testing the effectiveness of the unit tests and i generated a html report of the coverage. I also did mutation testing which was particularly a challenge but our tests passed them well.<br>
 
 ## Team Members: Pardis Norouzi, Tamara Orosz & Conor Glynn
