@@ -127,8 +127,10 @@ TestBookingSameRoomTimeAndDate<br>
 TestBookingMoreThanTwiceADay<br>
 
 ### Percentage Contribution by each Group Member with a Brief Description:
-- Pardis: 50%
-- Tamara: 35%
-- Conor: 15%
+As a team we decided on the database schema together and wrote the requirements together.<br>
+- Pardis: 50%<br>
+- Tamara: 35%<br>
+I set up the database, wrote the executable sql script to create the tables and wrote the sample data to fill the tables with. I also started the flask application and the layout of the current website. I documented these steps in the Setup Guide. Next I attempted to mock a database but this proved more challenging than expected so I did integration testing instead and left mocking until last. I never did get around to completely finish the mocking as there were connection errors.<br>
+- Conor: 15%<br>
 
 ## Team Members: Pardis Norouzi, Tamara Orosz & Conor Glynn
