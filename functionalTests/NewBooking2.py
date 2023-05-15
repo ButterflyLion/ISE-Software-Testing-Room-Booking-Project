@@ -31,7 +31,7 @@ if(browser.url == "http://127.0.0.1:5000/index"):
                     browser.find_by_text("25").click()  #selects 25th of May
                     browser.find_by_name("submit").click()
                     if(browser.is_element_present_by_css(".btn.hourbtn")):
-                        browser.find_by_text("09:00 - 10:00").click()
+                        browser.find_by_text("15:00 - 16:00").click()
                     
                         if(browser.is_element_present_by_id("myTable")):
                             table = browser.find_by_id("myTable")
@@ -40,7 +40,7 @@ if(browser.url == "http://127.0.0.1:5000/index"):
                                 ['No of Guests', '5'],
                                 ['Room', 'meeting room'],
                                 ['Date', '05/25/2023'],
-                                ['Time', '09:00 - 10:00']
+                                ['Time', '15:00 - 16:00']
                             ]
                             for i, row in enumerate(rows):
                                 cells = row.find_by_tag("td")
@@ -52,7 +52,7 @@ if(browser.url == "http://127.0.0.1:5000/index"):
 
                             if(browser.is_text_present("Submission was a success")):
                                 browser.find_by_name("submit").click() 
-                                print("Booking 1 was successful")
+                                print("Booking 2 was successful")
 
                             else:
                                 assert browser.is_text_present("Submission was a success"), "Couldn't confirm the booking"
