@@ -106,13 +106,13 @@ The code should exit with :
 ### Brief Outline of Features/Tests:
 1. In Unit Testing, we organize our tests into separate classes, each representing a specific function of the application. These classes contain various methods that test different scenarios, including valid and invalid cases.<br> 
 Here is the list of the classes:<br>
-TestLogin<br>
-TestNumberOfGuests<br>
-TestAvailableRooms<br>
-TestAvailableDate<br>
-TestAvailableHours<br>
-TestBooking<br>
-TestSubmitBooking<br>
+- TestLogin<br>
+- TestNumberOfGuests<br>
+- TestAvailableRooms<br>
+- TestAvailableDate<br>
+- TestAvailableHours<br>
+- TestBooking<br>
+- TestSubmitBooking<br>
 
 2. integrationTests : This aims to combine functional and integration testing. Functional testing tests that the application works as per the user's expectations. These are user stories which have been implemented. The 'splinter' module allows us to automate the user's interaction with the frontend, i.e. the webpages. We also consider these integration tests since they test that multiple components work together. We test that the data entered is used to determine what choices are shown to the user, e.g. if a user wants to book a room for themselves, they won't be given the option to book a conference room. 
 
@@ -121,14 +121,16 @@ The tests include retrieving users, user login validation, and retrieving availa
 
 3. System_Test.py : This repository contains automated tests written in Python using the Selenium library. These tests aim to validate the functionality of a web application by simulating user interactions and verifying expected outcomes. The test cases included in this repository cover various scenarios and functionalities of the web application.<br>
 Here is the list of the classes:<br>
-TestHappyPath1Student<br>
-TestHappyPath2Student<br>
-TestBookingSameRoomTimeAndDate<br>
-TestBookingMoreThanTwiceADay<br>
+- TestHappyPath1Student<br>
+- TestHappyPath2Student<br>
+- TestBookingSameRoomTimeAndDate<br>
+- TestBookingMoreThanTwiceADay<br>
 
 ### Percentage Contribution by each Group Member with a Brief Description:
-- Pardis: 50%
-- Tamara: 35%
-- Conor: 15%
+As a team we decided on the database schema together and wrote the requirements together.<br>
+- Pardis: 50%<br>
+- Tamara: 35%<br>
+I set up the database, wrote the executable sql script to create the tables and wrote the sample data to fill the tables with. I also started the flask application and the layout of the current website. I documented these steps in the Setup Guide. Next I attempted to mock a database but this proved more challenging than expected so I did integration testing instead and left mocking until last. I never did get around to completely finish the mocking as there were connection errors.<br>
+- Conor: 15%<br>
 
 ## Team Members: Pardis Norouzi, Tamara Orosz & Conor Glynn
