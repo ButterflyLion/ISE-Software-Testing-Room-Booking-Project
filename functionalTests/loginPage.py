@@ -20,7 +20,7 @@ if(
     login = browser.find_by_value("Log In").click()
 
     if(browser.url == "http://127.0.0.1:5000/index"):
-        assert browser.is_text_present("Welcome Olivia Johnson!")
+        assert browser.is_text_present("Welcome Olivia Johnson")
         assert browser.is_text_present("Role: student")
         print("Successful login")
     else:
