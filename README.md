@@ -40,7 +40,7 @@ Host: localhost, Port: 1521, Database: XEPDB1, Username: SYS, Role: SYSDBA, Pass
 1. Open your command prompt.<br>
 2. Set up a virtual environment and activate it.<br>
 3. Run the following with 'pip install ...', and allow the modules to install:<br>
-   flask, oracle, oracledb, splinter, mock, ...<br>
+   flask, oracle, oracledb, splinter, mock, selenium.<br>
 4. Download chromedriver from https://chromedriver.chromium.org/ and edit the executable_path in functional_test.py to the path to chromedriver on your machine.<br>
 </p>
 </details>
@@ -81,7 +81,7 @@ OK
 
 2. 'integrationTests' : It contains tests which can be run manually. The test files within this folder aim to cover integration testing and functional testing. They use a python module called 'splinter' which automates the testing of web application ineractions. To run the tests, first you'll need to run main.py and while that's running, you can run each python file separately. The code should exit with code=0 if the automated tests passed, i.e. the webpage functions as intended. It might even print out messages that confirm something about how the system reacted.
 
-2.'Integration_Test.py' : Try to install the required dependencies by running pip install -r requirements.txt and then navigate to the project directory.
+- 2.'Integration_Test.py' : Try to install the required dependencies by running pip install -r requirements.txt and then navigate to the project directory.
 Run the following command to execute the integration tests : pytest Integration_Test.py
 The code should exit with :
 Integration_Test.py ...                                                              [100%]
@@ -100,32 +100,35 @@ The code should exit with :
 ============================================= 4 passed in 140.54s (0:02:20) ==============================================
 
 
-4. 'mockTests' folder contains ...
+4. 'mockTests' folder contains two files: mockDB.py and mockDB_test.py. These are incomplete tests that were written but not finished due to them being lower in priority than the other tests we were writing. However, we decided to include them too, even if they're incomplete.
 
 
 ### Brief Outline of Features/Tests:
-1. In Unit Testing, we organize our tests into separate classes, each representing a specific function of the application. These classes contain various methods that test different scenarios, including valid and invalid cases. 
-Here is the list of the classes:
-TestLogin
-TestNumberOfGuests
-TestAvailableRooms
-TestAvailableDate
-TestAvailableHours
-TestBooking
-TestSubmitBooking
+1. In Unit Testing, we organize our tests into separate classes, each representing a specific function of the application. These classes contain various methods that test different scenarios, including valid and invalid cases.<br> 
+Here is the list of the classes:<br>
+TestLogin<br>
+TestNumberOfGuests<br>
+TestAvailableRooms<br>
+TestAvailableDate<br>
+TestAvailableHours<br>
+TestBooking<br>
+TestSubmitBooking<br>
 
-2.integrationTests :
+2. integrationTests : This aims to combine functional and integration testing. Functional testing tests that the application works as per the user's expectations. These are user stories which have been implemented. The 'splinter' module allows us to automate the user's interaction with the frontend, i.e. the webpages. We also consider these integration tests since they test that multiple components work together. We test that the data entered is used to determine what choices are shown to the user, e.g. if a user wants to book a room for themselves, they won't be given the option to book a conference room. 
 
 2. Integration_Test.py : 
 The tests include retrieving users, user login validation, and retrieving available rooms. The tests ensure the proper functioning of the database connection and data retrieval.
 
-3.System_Test.py : This repository contains automated tests written in Python using the Selenium library. These tests aim to validate the functionality of a web application by simulating user interactions and verifying expected outcomes. The test cases included in this repository cover various scenarios and functionalities of the web application.
-Here is the list of the classes:
-TestHappyPath1Student
-TestHappyPath2Student
-TestBookingSameRoomTimeAndDate
-TestBookingMoreThanTwiceADay
+3. System_Test.py : This repository contains automated tests written in Python using the Selenium library. These tests aim to validate the functionality of a web application by simulating user interactions and verifying expected outcomes. The test cases included in this repository cover various scenarios and functionalities of the web application.<br>
+Here is the list of the classes:<br>
+TestHappyPath1Student<br>
+TestHappyPath2Student<br>
+TestBookingSameRoomTimeAndDate<br>
+TestBookingMoreThanTwiceADay<br>
 
 ### Percentage Contribution by each Group Member with a Brief Description:
+- Pardis: 50%
+- Tamara: 35%
+- Conor: 15%
 
 ## Team Members: Pardis Norouzi, Tamara Orosz & Conor Glynn
