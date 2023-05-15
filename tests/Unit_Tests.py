@@ -389,6 +389,28 @@ class TestAvailableHours(unittest.TestCase):
         response = self.app.post('/index', data={ 's': 'confirm','roomid': '4','guests': '1','sdate': '05/18/2023','shour':13 }, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
         self.assertNotIn(b'You have selected the following:', response.data)
+    
+class TestBooking(unittest.TestCase):
+    def setUp(self):
+        self.app = app.test_client()
+        self.app.testing = True
+    
+    def test_booking_for_User(self):
+        self.app.post('/login',data={'username': '4@facultymail.ul.ie','password': '12345'})
+        response = self.app.post('/index', data={ 's': 'submit','roomid': '11','guests': '15','sdate': '05/26/2023','shour':4,  }, follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'Submission was a success', response.data)
+
+class TestSubmitBooking(unittest.TestCase):
+    def setUp(self):
+        self.app = app.test_client()
+        self.app.testing = True
+
+    def test_confirm_booking_for_User(self):
+        self.app.post('/login',data={'username': '4@facultymail.ul.ie','password': '12345'})
+        response = self.app.post('/index', data={ 's': 'main','roomid': '11','guests': '15','sdate': '05/26/2023','shour':4,  }, follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'Welcome', response.data) 
 
 
 if __name__ == '__main__':
