@@ -389,6 +389,10 @@ class TestAvailableHours(unittest.TestCase):
         response = self.app.post('/index', data={ 's': 'confirm','roomid': '4','guests': '1','sdate': '05/18/2023','shour':13 }, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
         self.assertNotIn(b'You have selected the following:', response.data)
+    
+    # Test that the person can not book for 30 minutes or less
+    #Test All bookings 
+
 
 
 if __name__ == '__main__':
