@@ -10,7 +10,7 @@ class TestLogin(unittest.TestCase):
     def test_valid_login(self):
         response = self.app.get('/login')
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b'Student/Staff ID', response.data)
+        self.assertIn(b'Email', response.data)
 
     def test_valid_login2(self):
         response = self.app.post('/login',data={'username': '1@studentmail.ul.ie', 'password': '12345'},follow_redirects=True)
