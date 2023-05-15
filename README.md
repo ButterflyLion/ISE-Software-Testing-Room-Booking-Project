@@ -69,8 +69,15 @@ Our web based application allows individuals associated with ISE (Immerisve Soft
 2. The building is open from 8am to 9pm, which means the rooms can be booked from 8am to 9pm every day.
 3. One booking refers to a one hour slot which is picked by the individual from the available times in the system.
 
-### How to Run Our Project and its Automated Tests:
-To run functional_test.py simply run main.py first and then run functional_test.py. The code should exit with code=0 if the automated tests passed, i.e. the webpage functions as intended.
+### How to Run Our Project and its Tests:
+All the tests for this project are located in the 'tests' folder of this repository.<br>
+1. 'integrationTests' folder contains tests which can be run manually. The test files within this folder aim to cover integration testing and functional testing. They use a python module called 'splinter' which automates the testing of web application ineractions. To run the tests, first you'll need to run main.py and while that's running, you can run each python file separately. The code should exit with code=0 if the automated tests passed, i.e. the webpage functions as intended. It might even print out messages that confirm something about how the system reacted.
+2. 'mockTests' folder contains ...
+3. 'Integration_Test.py' ...
+4. 'System_Test.py' ...
+5. 'Unit_Tests.py' ...
+6. ''
+
 ### Brief Outline of Features/Tests:
 ### Percentage Contribution by each Group Member with a Brief Description:
 
