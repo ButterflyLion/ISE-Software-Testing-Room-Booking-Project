@@ -10,7 +10,7 @@ url = 'http://127.0.0.1:5000'
 browser.visit(url)
 
 if(
-    browser.is_text_present("Student/Staff ID:"), "Title is not present" and
+    browser.is_text_present("Email:"), "Title is not present" and
     browser.is_element_present_by_name("username"), "Username field can't be found" and 
     browser.is_element_present_by_name("password"), "Password field can't be found" and 
     browser.is_element_present_by_value("Log In"), "Login button doesn't exist"
