@@ -1,5 +1,5 @@
 import main
-from mockDB import MockDB
+from mockTests.mockDB import MockDB
 from mock import patch
 
 class TestMain(MockDB):
