@@ -9,7 +9,7 @@ browser = Browser('chrome', **executable_path, headless=False, options=options)
 url = 'http://127.0.0.1:5000/index'
 browser.visit(url)
 
-browser.find_by_name("username").fill("6@studentmail.ul.ie")
+browser.find_by_name("username").fill("1@studentmail.ul.ie")
 browser.find_by_name("password").fill(12345)
 login = browser.find_by_value("Log In").click()
 
@@ -31,16 +31,16 @@ if(browser.url == "http://127.0.0.1:5000/index"):
                     browser.find_by_text("25").click()  #selects 25th of May
                     browser.find_by_name("submit").click()
                     if(browser.is_element_present_by_css(".btn.hourbtn")):
-                        browser.find_by_text("20:00 - 21:00").click()
+                        browser.find_by_text("09:00 - 10:00").click()
                     
                         if(browser.is_element_present_by_id("myTable")):
                             table = browser.find_by_id("myTable")
                             rows = table.find_by_tag("tr")
                             expected = [
-                                ['No of Guests', 5],
+                                ['No of Guests', '5'],
                                 ['Room', 'meeting room'],
                                 ['Date', '05/25/2023'],
-                                ['Time', '20:00 - 21:00']
+                                ['Time', '09:00 - 10:00']
                             ]
                             for i, row in enumerate(rows):
                                 cells = row.find_by_tag("td")
@@ -48,6 +48,16 @@ if(browser.url == "http://127.0.0.1:5000/index"):
                                     expected_value = expected[i][j]
                                     actual_value = cell.text
                                     assert expected_value == actual_value, f"Table data mismatch at Row {i+1}, Column {j+1}"
+                            browser.find_by_name("submit").click()
+
+                            if(browser.is_text_present("Submission was a success")):
+                                browser.find_by_name("submit").click() 
+
+                            else:
+                                assert browser.is_text_present("Submission was a success"), "Couldn't confirm the booking"
+
+                        else:
+                            assert browser.is_element_present_by_id("myTable"), "Table to show options selected for the room booking doesn't exist"
 
                     else:
                         assert browser.is_element_present_by_css(".btn.hourbtn"), "There are no time slots to pick from"            
