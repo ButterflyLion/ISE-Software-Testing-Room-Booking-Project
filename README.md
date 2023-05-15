@@ -71,14 +71,61 @@ Our web based application allows individuals associated with ISE (Immerisve Soft
 
 ### How to Run Our Project and its Tests:
 All the tests for this project are located in the 'tests' folder of this repository.<br>
-1. 'integrationTests' folder contains tests which can be run manually. The test files within this folder aim to cover integration testing and functional testing. They use a python module called 'splinter' which automates the testing of web application ineractions. To run the tests, first you'll need to run main.py and while that's running, you can run each python file separately. The code should exit with code=0 if the automated tests passed, i.e. the webpage functions as intended. It might even print out messages that confirm something about how the system reacted.
-2. 'mockTests' folder contains ...
-3. 'Integration_Test.py' ...
-4. 'System_Test.py' ...
-5. 'Unit_Tests.py' ...
-6. ''
+1. 'Unit_Tests.py' : To run unit tests, first you need to have the following installed:
+- Python (version 3.6 or later)
+- Flask (install using pip install flask)
+Navigate to the project directory in the terminal and run the following command to execute the unit tests: Python -m unittest Unit_Tests.py
+The code should exit with :
+Ran 29 tests in 3.068s
+OK
+
+2. 'integrationTests' : It contains tests which can be run manually. The test files within this folder aim to cover integration testing and functional testing. They use a python module called 'splinter' which automates the testing of web application ineractions. To run the tests, first you'll need to run main.py and while that's running, you can run each python file separately. The code should exit with code=0 if the automated tests passed, i.e. the webpage functions as intended. It might even print out messages that confirm something about how the system reacted.
+
+2.'Integration_Test.py' : Try to install the required dependencies by running pip install -r requirements.txt and then navigate to the project directory.
+Run the following command to execute the integration tests : pytest Integration_Test.py
+The code should exit with :
+Integration_Test.py ...                                                              [100%]
+
+==================================== 3 passed in 0.29s ====================================
+
+
+3. 'System_Test.py' : 
+Before running the tests, ensure that you have the following dependencies installed:
+- Pytest libarary
+- Selenium library
+- Chrome WebDriver (compatible with your Chrome browser version)
+Navigate to the project's root directory and execute the tests by running the following command: pytest System_Test.py
+The code should exit with :
+.                                                                                                 [100%]
+============================================= 4 passed in 140.54s (0:02:20) ==============================================
+
+
+4. 'mockTests' folder contains ...
+
 
 ### Brief Outline of Features/Tests:
+1. In Unit Testing, we organize our tests into separate classes, each representing a specific function of the application. These classes contain various methods that test different scenarios, including valid and invalid cases. 
+Here is the list of the classes:
+TestLogin
+TestNumberOfGuests
+TestAvailableRooms
+TestAvailableDate
+TestAvailableHours
+TestBooking
+TestSubmitBooking
+
+2.integrationTests :
+
+2. Integration_Test.py : 
+The tests include retrieving users, user login validation, and retrieving available rooms. The tests ensure the proper functioning of the database connection and data retrieval.
+
+3.System_Test.py : This repository contains automated tests written in Python using the Selenium library. These tests aim to validate the functionality of a web application by simulating user interactions and verifying expected outcomes. The test cases included in this repository cover various scenarios and functionalities of the web application.
+Here is the list of the classes:
+TestHappyPath1Student
+TestHappyPath2Student
+TestBookingSameRoomTimeAndDate
+TestBookingMoreThanTwiceADay
+
 ### Percentage Contribution by each Group Member with a Brief Description:
 
 ## Team Members: Pardis Norouzi, Tamara Orosz & Conor Glynn
