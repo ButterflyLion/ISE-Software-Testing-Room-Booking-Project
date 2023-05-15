@@ -126,6 +126,19 @@ Here is the list of the classes:<br>
 - TestBookingSameRoomTimeAndDate<br>
 - TestBookingMoreThanTwiceADay<br>
 
+4. Coverage tests involves testing to see how good our tests are. The main premise of it is to check how many lines of code is being tested in the main.py file and dividing that by the number of lines of code that is in that main.py file. According to <a href = "https://learn.microsoft.com/en-us/answers/questions/778016/test-coverage-definition-unit-testing">Microsoft</a>: "Optimal Test Coverage Rate: Keeping it between 70 - 80%" while "Overkill Test Coverage Rate: Keeping it between 80 - 100%".
+
+
+Results of our Coverage Tests:
+
+Module	   statements	   missing	   excluded	   coverage<br><br>
+
+Unit_Tests.py&nbsp;&nbsp;&nbsp;&nbsp;324&nbsp;&nbsp;&nbsp;&nbsp;136&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;58%<br>
+main.py&nbsp;&nbsp;&nbsp;&nbsp;228&nbsp;&nbsp;&nbsp;&nbsp;57&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;75%<br>
+Total&nbsp;&nbsp;&nbsp;&nbsp;552&nbsp;&nbsp;&nbsp;&nbsp;193&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;65%<br>
+
+The line to focus on is the coverage of the main.py. This is because this line describes how many lines of the source code is being tested by the Unit_Tests.py file. As we can see, we have a coverage of 75% which is in the optimal range.
+
 ### Percentage Contribution by each Group Member with a Brief Description:
 As a team we decided on the database schema together and wrote the requirements together.<br>
 - Pardis: 50%<br>
