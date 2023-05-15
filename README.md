@@ -129,8 +129,11 @@ Here is the list of the classes:<br>
 ### Percentage Contribution by each Group Member with a Brief Description:
 As a team we decided on the database schema together and wrote the requirements together.<br>
 - Pardis: 50%<br>
+I modified and expanded the database by incorporating additional fields and data to meet our specific requirements. I developed all the necessary routing codes and methods in 'main.py' from an empty Flask app to ensure seamless website functionality within the app. I customized the site template ('index.html') and implemented code to dynamically display various website components based on the Flask app's routes. To ensure the reliability of the system, I authored comprehensive Unit Tests ('Unit_Tests.py'), Integration Tests ('Integration_Test.py'), and System Tests ('System_Test.py'). My Integration Tests is not complete as Tamara was already working extensively on that. Additionally, I completed the documentation related to my own testing efforts, providing thorough details for future reference.
+
 - Tamara: 35%<br>
 I set up the database, wrote the executable sql script to create the tables and wrote the sample data to fill the tables with. I also started the flask application and the layout of the current website. I documented these steps in the Setup Guide. Next I attempted to mock a database but this proved more challenging than expected so I did integration testing instead and left mocking until last. I never did get around to completely finish the mocking as there were connection errors.<br>
+
 - Conor: 15%<br>
 
 ## Team Members: Pardis Norouzi, Tamara Orosz & Conor Glynn
